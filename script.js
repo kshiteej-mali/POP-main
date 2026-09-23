@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     isNavigating = true;
 
+    if (targetId === 'iks') {
+      document.body.classList.add('iks-theme');
+    } else {
+      document.body.classList.remove('iks-theme');
+    }
+
     navButtons.forEach(b => {
       if (b.dataset.target === targetId) {
         b.classList.add('active');
@@ -3010,3 +3016,187 @@ if (typeof module !== 'undefined' && module.exports) {
 
 
 
+// --- Chakra Yantra Generator Logic ---
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Numeric Planet Yantra (Magic Squares)
+  const planetSelect = document.getElementById('planet-select');
+  const yantraGrid = document.getElementById('yantra-grid');
+  const rowSumsDiv = document.getElementById('row-sums');
+  const colSumsDiv = document.getElementById('col-sums');
+  const diagSum1 = document.getElementById('diag-sum-1');
+  const diagSum2 = document.getElementById('diag-sum-2');
+
+  const baseSquare = [
+    [8, 1, 6],
+    [3, 5, 7],
+    [4, 9, 2]
+  ];
+
+  function generateMagicSquare(target) {
+    const diff = (target / 3) - 5;
+    let html = '';
+    let rows = [0, 0, 0];
+    let cols = [0, 0, 0];
+    let d1 = 0;
+    let d2 = 0;
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        const val = baseSquare[i][j] + diff;
+        rows[i] += val;
+        cols[j] += val;
+        if (i === j) d1 += val;
+        if (i + j === 2) d2 += val;
+        html += `<div class="bg-slate-700/80 text-amber-300 font-bold text-2xl h-16 w-16 md:h-20 md:w-20 flex items-center justify-center rounded border border-slate-600/50 shadow-inner hover:bg-slate-600 transition-colors cursor-default">${val}</div>`;
+      }
+    }
+    
+    yantraGrid.innerHTML = html;
+    
+    rowSumsDiv.innerHTML = rows.map(r => `<div>= ${r}</div>`).join('');
+    colSumsDiv.innerHTML = cols.map(c => `<div>${c}</div>`).join('');
+    diagSum1.innerHTML = `\\ ${d1}`;
+    diagSum2.innerHTML = `${d2} /`;
+  }
+
+  if (planetSelect && yantraGrid) {
+    planetSelect.addEventListener('change', (e) => {
+      generateMagicSquare(parseInt(e.target.value));
+    });
+    generateMagicSquare(15);
+  }
+
+  // 2. Geometric Sri Chakra Yantra
+  const sriChakraSvg = document.getElementById('sri-chakra-svg');
+  const avaranaList = document.getElementById('avarana-list');
+  const infoTitle = document.getElementById('info-title');
+  const infoDesc = document.getElementById('info-desc');
+
+  const avaranas = [
+    { id: 'bhupura', name: '1. Bhupura', desc: 'The outer earth square with 4 portals. Represents the physical plane and grounding.' },
+    { id: 'shodashadala', name: '2. Shodashadala', desc: 'The 16-petaled lotus. Represents fulfillment of all hopes and desires.' },
+    { id: 'ashtadala', name: '3. Ashtadala', desc: 'The 8-petaled lotus. Represents the eight fold nature of the subtle body and chakras.' },
+    { id: 'chaturdashara', name: '4. Chaturdashara', desc: 'The 14-triangle circuit. Represents the 14 nadis (energy channels) of the body.' },
+    { id: 'bahirdashara', name: '5. Bahirdashara', desc: 'The outer 10-triangle circuit. Represents the 10 vital breaths (Pranas).' },
+    { id: 'antardashara', name: '6. Antardashara', desc: 'The inner 10-triangle circuit. Represents the 10 aspects of spiritual fire.' },
+    { id: 'ashtakona', name: '7. Ashtakona', desc: 'The 8-triangle circuit. Represents the eightfold forms of the divine mother.' },
+    { id: 'trikona', name: '8. Trikona', desc: 'The central primal triangle. Represents the trinity of creation, preservation, and dissolution.' },
+    { id: 'bindu', name: '9. Bindu', desc: 'The central dimensionless dot. Represents the ultimate unmanifested state of pure consciousness.' }
+  ];
+
+  function renderSriChakra() {
+    if (!sriChakraSvg) return;
+    const cx = 250, cy = 250;
+    let svgHtml = '';
+
+    // Simplified geometric representations
+    // 1. Bhupura (Outer Square)
+    svgHtml += `<rect id="svg-bhupura" class="chakra-layer" x="20" y="20" width="460" height="460" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0.4" />`;
+    svgHtml += `<rect x="50" y="50" width="400" height="400" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.3" />`;
+    svgHtml += `<rect x="80" y="80" width="340" height="340" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.3" />`;
+
+    // 2. Shodashadala (16 Petals - simple circles)
+    svgHtml += `<circle id="svg-shodashadala" class="chakra-layer" cx="${cx}" cy="${cy}" r="160" fill="none" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="10 5" opacity="0.5" />`;
+
+    // 3. Ashtadala (8 Petals)
+    svgHtml += `<circle id="svg-ashtadala" class="chakra-layer" cx="${cx}" cy="${cy}" r="120" fill="none" stroke="#6366f1" stroke-width="4" stroke-dasharray="20 10" opacity="0.6" />`;
+
+    // 4. Chaturdashara (14 triangles)
+    svgHtml += `<path id="svg-chaturdashara" class="chakra-layer" d="M250,110 L150,320 L350,320 Z M250,390 L150,180 L350,180 Z" fill="none" stroke="#14b8a6" stroke-width="2" opacity="0.6" />`;
+
+    // 5. Bahirdashara (Outer 10 triangles)
+    svgHtml += `<path id="svg-bahirdashara" class="chakra-layer" d="M250,140 L170,290 L330,290 Z M250,360 L170,210 L330,210 Z" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.6" />`;
+
+    // 6. Antardashara (Inner 10 triangles)
+    svgHtml += `<path id="svg-antardashara" class="chakra-layer" d="M250,165 L190,270 L310,270 Z M250,335 L190,230 L310,230 Z" fill="none" stroke="#8b5cf6" stroke-width="2.5" opacity="0.7" />`;
+
+    // 7. Ashtakona (8 triangles)
+    svgHtml += `<path id="svg-ashtakona" class="chakra-layer" d="M250,185 L210,250 L290,250 Z M250,315 L210,250 L290,250 Z" fill="none" stroke="#fbbf24" stroke-width="2.5" opacity="0.8" />`;
+
+    // 8. Trikona (Central Triangle)
+    svgHtml += `<polygon id="svg-trikona" class="chakra-layer" points="250,210 230,260 270,260" fill="none" stroke="#f43f5e" stroke-width="3" opacity="0.9" />`;
+
+    // 9. Bindu (Center Dot)
+    svgHtml += `<circle id="svg-bindu" class="chakra-layer" cx="${cx}" cy="245" r="4" fill="#fbbf24" stroke="#fcd34d" stroke-width="2" opacity="1" />`;
+
+    sriChakraSvg.innerHTML = svgHtml;
+
+    // Sidebar rendering
+    if (avaranaList) {
+      avaranaList.innerHTML = avaranas.map(a => `
+        <button class="avarana-btn text-left px-4 py-2 bg-slate-800/60 hover:bg-indigo-900/60 border border-slate-700 hover:border-indigo-500 rounded text-slate-300 hover:text-amber-300 transition-all text-sm font-medium" data-id="${a.id}">
+          ${a.name}
+        </button>
+      `).join('');
+    }
+
+    // Interaction Logic
+    const layers = document.querySelectorAll('.chakra-layer');
+    const btns = document.querySelectorAll('.avarana-btn');
+
+    function selectAvarana(id) {
+      btns.forEach(b => {
+        if (b.dataset.id === id) {
+          b.classList.add('bg-indigo-900/80', 'border-indigo-400', 'text-amber-400');
+          b.classList.remove('bg-slate-800/60', 'border-slate-700', 'text-slate-300');
+        } else {
+          b.classList.remove('bg-indigo-900/80', 'border-indigo-400', 'text-amber-400');
+          b.classList.add('bg-slate-800/60', 'border-slate-700', 'text-slate-300');
+        }
+      });
+
+      layers.forEach(l => {
+        if (l.id === `svg-${id}`) {
+          l.setAttribute('stroke', '#fbbf24');
+          l.setAttribute('stroke-width', (parseFloat(l.getAttribute('stroke-width')) + 1.5).toString());
+          l.setAttribute('opacity', '1');
+          l.classList.add('drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]');
+        } else {
+          // Reset stroke based on original drawing logic
+          l.removeAttribute('class');
+          l.classList.add('chakra-layer');
+          // We won't strictly revert colors here for simplicity, but lower opacity
+          l.setAttribute('opacity', '0.2');
+        }
+      });
+
+      const data = avaranas.find(a => a.id === id);
+      if (data) {
+        infoTitle.textContent = data.name;
+        infoDesc.textContent = data.desc;
+        infoTitle.parentElement.classList.add('scale-[1.02]', 'bg-indigo-900/50', 'border-indigo-400');
+        setTimeout(() => {
+          infoTitle.parentElement.classList.remove('scale-[1.02]');
+        }, 300);
+      }
+    }
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectAvarana(btn.dataset.id);
+      });
+    });
+
+    layers.forEach(layer => {
+      layer.style.cursor = 'pointer';
+      layer.addEventListener('click', () => {
+        const id = layer.id.replace('svg-', '');
+        selectAvarana(id);
+      });
+      // Add hover effect
+      layer.addEventListener('mouseenter', () => {
+        layer.setAttribute('opacity', '1');
+      });
+      layer.addEventListener('mouseleave', () => {
+        // Only if not selected
+        const activeBtn = document.querySelector('.avarana-btn.bg-indigo-900\\/80');
+        if (!activeBtn || activeBtn.dataset.id !== layer.id.replace('svg-', '')) {
+          layer.setAttribute('opacity', activeBtn ? '0.2' : '0.6');
+        }
+      });
+    });
+  }
+
+  renderSriChakra();
+});
