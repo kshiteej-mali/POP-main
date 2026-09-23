@@ -13,7 +13,10 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
 </head>
 
 <body>
@@ -181,6 +184,178 @@
             <p style="margin-top: 1rem;"><strong>Yasti Yantra (Measuring Staff):</strong> Described by Lalla and
               Bhaskara II, it was a calibrated staff used to determine heights and angular distances of astronomical
               bodies.</p>
+          </div>
+        </div>
+
+        <!-- Chakra Yantra Generator -->
+        <div id="chakra-generator" class="mt-12 bg-slate-900 border border-slate-700 rounded-xl p-8 shadow-[0_0_40px_rgba(30,27,75,0.8)] text-slate-200">
+          <h2 class="text-3xl font-cinzel text-amber-400 mb-6 text-center tracking-wide" style="font-family: 'Cinzel', serif;">Chakra Yantra Generator</h2>
+          
+          <!-- Numeric Planet Yantra -->
+          <div class="mb-12">
+            <h3 class="text-2xl font-cinzel text-indigo-400 mb-4 border-b border-indigo-900 pb-2" style="font-family: 'Cinzel', serif;">1. Numeric Planet Yantra (Magic Squares)</h3>
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+              <div class="w-full md:w-1/3">
+                <label class="block text-slate-400 text-sm font-bold mb-2" for="planet-select">Select Planet (Navagraha):</label>
+                <select id="planet-select" class="w-full bg-slate-800 border border-slate-600 text-slate-100 rounded px-4 py-2 focus:outline-none focus:border-amber-400 focus:shadow-[0_0_10px_rgba(251,191,36,0.3)] transition-all">
+                  <option value="15">Sun (Surya) - 15</option>
+                  <option value="18">Moon (Chandra) - 18</option>
+                  <option value="21">Mars (Mangal) - 21</option>
+                  <option value="24">Mercury (Budha) - 24</option>
+                  <option value="27">Jupiter (Guru) - 27</option>
+                  <option value="30">Venus (Shukra) - 30</option>
+                  <option value="33">Saturn (Shani) - 33</option>
+                  <option value="36">Rahu - 36</option>
+                  <option value="39">Ketu - 39</option>
+                </select>
+                <div class="mt-6 p-4 bg-slate-800/50 border border-slate-700 rounded-lg">
+                  <p class="text-sm text-slate-300">
+                    The Vedic magic square aligns planetary energies. The grid is constructed such that every row, column, and diagonal sums to the sacred "Magic Constant" of the selected planet.
+                  </p>
+                </div>
+              </div>
+              <div class="w-full md:w-2/3 flex justify-center">
+                <div class="relative">
+                  <div id="yantra-grid" class="grid grid-cols-3 gap-2 p-3 bg-slate-800 border-2 border-amber-500/50 rounded-lg shadow-[0_0_25px_rgba(251,191,36,0.15)] relative z-10">
+                    <!-- Grid cells populated by JS -->
+                  </div>
+                  <!-- Validation overlays -->
+                  <div id="row-sums" class="absolute -right-12 top-0 bottom-0 flex flex-col justify-around py-4 font-mono text-amber-300 text-sm opacity-80"></div>
+                  <div id="col-sums" class="absolute -bottom-10 left-0 right-0 flex justify-around px-4 font-mono text-amber-300 text-sm opacity-80"></div>
+                  <div id="diag-sum-1" class="absolute -left-12 -top-8 font-mono text-indigo-300 text-sm opacity-80"></div>
+                  <div id="diag-sum-2" class="absolute -right-12 -bottom-8 font-mono text-indigo-300 text-sm opacity-80"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Geometric Sri Chakra -->
+          <div>
+            <h3 class="text-2xl font-cinzel text-indigo-400 mb-6 border-b border-indigo-900 pb-2" style="font-family: 'Cinzel', serif;">2. Geometric Sri Chakra Yantra</h3>
+            <div class="flex flex-col lg:flex-row gap-8">
+              <div class="w-full lg:w-2/3 flex justify-center bg-slate-950 rounded-xl border border-slate-800 p-4 shadow-inner relative overflow-hidden group">
+                <div class="absolute inset-0 bg-indigo-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-xl rounded-full scale-150"></div>
+                <!-- Interactive SVG -->
+                <svg id="sri-chakra-svg" viewBox="0 0 500 500" class="w-full max-w-[400px] h-auto drop-shadow-[0_0_15px_rgba(251,191,36,0.2)] z-10 cursor-pointer">
+                  <!-- Layers rendered via JS -->
+                </svg>
+              </div>
+              <div class="w-full lg:w-1/3 flex flex-col">
+                <h4 class="text-lg font-bold text-slate-300 mb-3 font-cinzel" style="font-family: 'Cinzel', serif;">Explore the 9 Avaranas</h4>
+                <div id="avarana-list" class="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-2">
+                  <!-- List generated by JS -->
+                </div>
+                <div id="avarana-info" class="mt-6 p-5 bg-indigo-950/40 border border-indigo-500/30 rounded-lg shadow-lg min-h-[160px] flex flex-col justify-center transition-all duration-300">
+                  <h5 class="text-amber-400 font-bold mb-2 font-cinzel text-lg" id="info-title" style="font-family: 'Cinzel', serif;">Sri Chakra</h5>
+                  <p class="text-sm text-slate-300 leading-relaxed" id="info-desc">Select an Avarana (circuit) from the list or click on the geometric layers to explore its spiritual meaning.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yasti Yantra Generator -->
+        <div id="yasti-generator" class="mt-12 bg-slate-900 border border-slate-700 rounded-xl p-8 shadow-[0_0_40px_rgba(30,27,75,0.8)] text-slate-200">
+          <h2 class="text-3xl font-cinzel text-teal-400 mb-6 text-center tracking-wide" style="font-family: 'Cinzel', serif;">Yasti Yantra (The Stick Instrument)</h2>
+          
+          <div class="mb-8 p-6 bg-slate-800/60 border border-slate-700 rounded-lg">
+            <h3 class="text-xl font-bold text-slate-200 mb-3 font-cinzel" style="font-family: 'Cinzel', serif;">Origin & Core Concept</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-3">
+              Invented by Indian mathematician-astronomer <strong>Bhaskaracharya II</strong> in his 1150 CE treatise <em>"Siddhanta Shiromani"</em>.
+            </p>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              A physical, trigonometric analogue calculator that solves for unknown real-world heights and distances strictly using the geometric scale properties of <strong>Similar Triangles</strong>, bypassing the need for modern tangent tables.
+            </p>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left: Info & Calculator -->
+            <div class="w-full lg:w-1/2 flex flex-col gap-6">
+              
+              <!-- Tab Switcher -->
+              <div class="flex gap-4 border-b border-slate-700 pb-2">
+                <button id="mode-a-btn" class="px-4 py-2 font-bold text-teal-400 border-b-2 border-teal-400 transition-colors">Mode A (Single Sighting)</button>
+                <button id="mode-b-btn" class="px-4 py-2 font-bold text-slate-400 border-b-2 border-transparent hover:text-teal-300 transition-colors">Mode B (Double Sighting)</button>
+              </div>
+
+              <!-- Mode A Panel -->
+              <div id="mode-a-panel" class="flex flex-col gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Distance (D) m</label>
+                    <input type="range" id="yasti-d" min="10" max="200" value="100" class="w-full accent-teal-500">
+                    <div class="text-right text-sm text-teal-300 font-mono" id="yasti-d-val">100</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Stand Height (d) m</label>
+                    <input type="range" id="yasti-stand" min="0.5" max="3" step="0.1" value="1.5" class="w-full accent-teal-500">
+                    <div class="text-right text-sm text-teal-300 font-mono" id="yasti-stand-val">1.5</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Vert Proj (H) m</label>
+                    <input type="range" id="yasti-h" min="0.1" max="5" step="0.1" value="1.0" class="w-full accent-teal-500">
+                    <div class="text-right text-sm text-teal-300 font-mono" id="yasti-h-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Horiz Proj (L) m</label>
+                    <input type="range" id="yasti-l" min="0.1" max="5" step="0.1" value="2.0" class="w-full accent-teal-500">
+                    <div class="text-right text-sm text-teal-300 font-mono" id="yasti-l-val">2.0</div>
+                  </div>
+                </div>
+                
+                <div class="mt-4 p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-lg shadow-inner">
+                  <h4 class="text-xs font-bold text-indigo-300 mb-2 uppercase tracking-widest">Mathematical Derivation</h4>
+                  <div class="font-mono text-sm text-slate-200" id="mode-a-math">
+                    <!-- Math injected here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode B Panel (Hidden by default) -->
+              <div id="mode-b-panel" class="hidden flex-col gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="col-span-2">
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Baseline Shift (B) m</label>
+                    <input type="range" id="yasti-b" min="5" max="100" value="30" class="w-full accent-purple-500">
+                    <div class="text-right text-sm text-purple-300 font-mono" id="yasti-b-val">30</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Vert Proj 1 (H1) m</label>
+                    <input type="range" id="yasti-h1" min="0.1" max="5" step="0.1" value="1.0" class="w-full accent-purple-500">
+                    <div class="text-right text-sm text-purple-300 font-mono" id="yasti-h1-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Horiz Proj 1 (L1) m</label>
+                    <input type="range" id="yasti-l1" min="0.1" max="5" step="0.1" value="2.0" class="w-full accent-purple-500">
+                    <div class="text-right text-sm text-purple-300 font-mono" id="yasti-l1-val">2.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Vert Proj 2 (H2) m</label>
+                    <input type="range" id="yasti-h2" min="0.1" max="5" step="0.1" value="1.0" class="w-full accent-purple-500">
+                    <div class="text-right text-sm text-purple-300 font-mono" id="yasti-h2-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">Horiz Proj 2 (L2) m</label>
+                    <input type="range" id="yasti-l2" min="0.1" max="5" step="0.1" value="2.5" class="w-full accent-purple-500">
+                    <div class="text-right text-sm text-purple-300 font-mono" id="yasti-l2-val">2.5</div>
+                  </div>
+                </div>
+
+                <div class="mt-4 p-4 bg-indigo-950/40 border border-indigo-500/30 rounded-lg shadow-inner">
+                  <h4 class="text-xs font-bold text-indigo-300 mb-2 uppercase tracking-widest">Mathematical Derivation</h4>
+                  <div class="font-mono text-sm text-slate-200" id="mode-b-math">
+                    <!-- Math injected here -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+            <!-- Right: Live 3D Viewport -->
+            <div class="w-full lg:w-1/2 min-h-[400px] bg-slate-950 rounded-xl border border-slate-700 overflow-hidden relative shadow-inner">
+              <div class="absolute top-2 left-2 text-xs text-slate-500 font-mono z-10 pointer-events-none">Drag to rotate • Scroll to zoom</div>
+              <div id="yasti-3d-container" class="absolute inset-0"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1330,6 +1505,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="yasti.js"></script>
 </body>
-
 </html>
