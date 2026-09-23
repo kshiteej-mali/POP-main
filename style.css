@@ -21,8 +21,41 @@
   --orange-hover: #f18737;
   
   --danger: #cf4343;
+  --danger: #cf4343;
   --font: 'Outfit', sans-serif;
 }
+
+body.iks-theme {
+  --bg: #0f172a; /* slate-900 */
+  --panel-bg: #1e293b; /* slate-800 */
+  --panel-border: #334155; /* slate-700 */
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --primary: #4f46e5; /* indigo-600 */
+  --primary-hover: #6366f1; /* indigo-500 */
+  --secondary: #8b5cf6; /* violet-500 */
+  --secondary-hover: #a855f7; /* purple-500 */
+  --teal: #14b8a6; /* teal-500 */
+  --accent: #fbbf24; /* amber-400 */
+  --accent-hover: #fcd34d; /* amber-300 */
+}
+
+/* Custom Scrollbar for Yantra sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(79, 70, 229, 0.5);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.8);
+}
+
 
 * {
   box-sizing: border-box;
