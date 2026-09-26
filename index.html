@@ -20,9 +20,8 @@
 </head>
 
 <body>
-  <div class="beams-canvas-container">
-    <canvas id="beams-canvas"></canvas>
-  </div>
+  <div class="custom-cursor" id="customCursor"></div>
+  <div class="scanner-container" id="scanner-bg"></div>
   <header>
     <div class="logo" style="font-family: 'Cinzel', serif;">POP <span class="caret">/</span> Precision of Physics</div>
     <div class="header-nav-container">
@@ -42,10 +41,9 @@
   <main>
     <section id="home" class="section active">
       <div class="home-hero full-home-hero">
-        <div class="particle-text-wrapper" id="home-particle-wrapper">
-          <div id="pop-particle-text" class="particle-text" aria-label="Precision of Physics (POP)">
-            <canvas id="pop-particle-canvas" class="particle-text__canvas" aria-hidden="true"></canvas>
-            <span class="particle-text__sr">Precision of Physics (POP)</span>
+        <div class="tech-text-wrapper" id="home-techtext-wrapper" style="width: 100%; height: clamp(260px, 36vh, 420px); position: relative;">
+          <div id="pop-tech-text" class="tech-text" role="img" aria-label="Precision of Physics">
+            <canvas id="pop-tech-canvas" class="tech-text-canvas"></canvas>
           </div>
         </div>
         <h1 class="hero-title" style="display: none;">Precision of Physics (POP)</h1>

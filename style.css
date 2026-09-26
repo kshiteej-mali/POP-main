@@ -516,21 +516,21 @@ table.iks-table th {
   display: flex;
 }
 
-.beams-canvas-container {
+.scanner-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 0;
-  pointer-events: none;
   overflow: hidden;
+  pointer-events: auto;
 }
 
-#beams-canvas {
+.scanner-container canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
 }
 
 .home-hero {
@@ -548,9 +548,9 @@ table.iks-table th {
   min-height: calc(100vh - 120px);
 }
 
-.particle-text-wrapper {
+.tech-text-wrapper {
   width: 100%;
-  height: clamp(240px, 38vh, 380px);
+  height: clamp(260px, 36vh, 420px);
   position: relative;
   margin-bottom: 0.8rem;
   display: flex;
@@ -558,36 +558,18 @@ table.iks-table th {
   justify-content: center;
 }
 
-.particle-text {
+.tech-text {
   position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.tech-text-canvas {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 220px;
-  overflow: hidden;
-  touch-action: none;
-  isolation: isolate;
-  cursor: default;
-}
-
-.particle-text__canvas {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.particle-text__sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .hero-title {
@@ -922,5 +904,40 @@ table.iks-table th {
 body.intro-active {
   overflow: hidden !important;
   touch-action: none !important;
+}
+
+/* Custom Smooth Morphed Inverted Circle Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50% !important;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+  will-change: transform, width, height;
+}
+
+.custom-cursor.active {
+  opacity: 1;
+}
+
+.custom-cursor.hovered {
+  width: 56px;
+  height: 56px;
+  border-radius: 50% !important;
+}
+
+.custom-cursor.clicked {
+  width: 18px;
+  height: 18px;
 }
 
