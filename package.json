@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "test": "node tests/verify_script.js && node tests/spherometer.test.js"
+  },
+  "dependencies": {
+    "canvas": "^3.2.3",
+    "jsdom": "^30.1.0",
+    "playwright": "^1.63.0"
+  }
+}

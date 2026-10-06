@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precision of Physics (POP) - High-Precision Metrology Suite</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Outfit:wght@300;400;500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
+</head>
+
+<body>
+  <div class="custom-cursor" id="customCursor"></div>
+  <div class="scanner-container" id="scanner-bg"></div>
+  <header>
+    <div class="logo" style="font-family: 'Cinzel', serif;">POP <span class="caret">/</span> Precision of Physics</div>
+    <div class="header-nav-container">
+      <nav class="instruments-nav">
+        <button class="nav-btn active" data-target="home">Home</button>
+        <button class="nav-btn" data-target="vernier">Vernier Caliper</button>
+        <button class="nav-btn" data-target="screw">Screw Gauge</button>
+        <button class="nav-btn" data-target="spherometer">Spherometer</button>
+      </nav>
+      <nav class="iks-nav">
+        <button class="nav-btn" data-target="about" style="margin-right: 0.5rem;">About Us</button>
+        <button class="nav-btn iks-btn" data-target="iks">IKS Metrology</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="section active">
+      <div class="home-hero full-home-hero">
+        <div class="tech-text-wrapper" id="home-techtext-wrapper"
+          style="width: 100%; height: clamp(260px, 36vh, 420px); position: relative;">
+          <div id="pop-tech-text" class="tech-text" role="img" aria-label="Precision of Physics">
+            <canvas id="pop-tech-canvas" class="tech-text-canvas"></canvas>
+          </div>
+        </div>
+        <h1 class="hero-title" style="display: none;">Precision of Physics (POP)</h1>
+        <p class="hero-subtitle">High-Precision Physical Metrology &amp; Historical Science Suite</p>
+        <div class="card-grid">
+          <div class="card-nav" data-target="vernier">
+            <h3>Vernier Caliper</h3>
+          </div>
+          <div class="card-nav" data-target="screw">
+            <h3>Screw Gauge</h3>
+          </div>
+          <div class="card-nav" data-target="spherometer">
+            <h3>Spherometer</h3>
+          </div>
+          <div class="card-nav" data-target="iks">
+            <h3>IKS Metrology</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="iks-card" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="font-family: 'Cinzel', serif; text-align: center; margin-bottom: 2rem; color: var(--accent);">About
+          the Project & Team</h2>
+        <p
+          style="text-align: center; margin-bottom: 2.5rem; color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+          <strong>Precision of Physics (POP)</strong> is a comprehensive physical metrology and scientific simulation
+          suite.
+          It integrates high-precision mechanical instrument simulations with rigorous formulations and ancient Indian
+          metrological history.
+        </p>
+
+        <div class="iks-grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
+          <div class="iks-item">
+            <h3 style="border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+              Project Contributions</h3>
+            <table class="iks-table">
+              <thead>
+                <tr>
+                  <th>Team Member</th>
+                  <th>Role / Contribution</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Avani Shastri</strong> (MIT)</td>
+                  <td>Website Design & Whole Site Architecture</td>
+                </tr>
+                <tr>
+                  <td><strong>Siya Kale</strong> (MIT)</td>
+                  <td>UI/UX Design (Interactive elements, Calibration sliders, Caliper styling)</td>
+                </tr>
+                <tr>
+                  <td><strong>Taal Patil</strong> (MIT)</td>
+                  <td>Project Report for Experiment 1 & 2 (Vernier Caliper & Screw Gauge)</td>
+                </tr>
+                <tr>
+                  <td><strong>Mrunmayee Kulkarni</strong> (MIT)</td>
+                  <td>Project Report for Experiment 3 (Spherometer & Indian Knowledge System)</td>
+                </tr>
+                <tr>
+                  <td><strong>Kashish</strong> (MIT)</td>
+                  <td>Simulation Calculations, Metrology Formulations, & Flowcharts</td>
+                </tr>
+                <tr>
+                  <td><strong>Kshiteej Mali</strong></td>
+                  <td>Website Backend Simulation Handling & Math Logic Scripting</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="iks" class="section">
+      <div class="iks-card">
+        <h2 style="font-family: 'Cinzel', serif;">Indian Knowledge System (IKS) on Metrology</h2>
+        <p class="hidden">Measurement (Māna) has been fundamental to Indian civilization since the Vedic period.</p>
+
+        <!-- Ancient Astronomical Instruments -->
+        <div id="ancient-instruments"
+          class="mt-12 bg-black border border-[#ff5500]/70 rounded-xl p-8 shadow-[0_0_40px_rgba(255,85,0,0.3)] text-orange-100">
+          <h2 class="text-3xl font-cinzel text-[#ff6600] mb-6 text-center tracking-wide"
+            style="font-family: 'Cinzel', serif;">Ancient Astronomical Instruments</h2>
+
+          <!-- 1.5.1 Chakra Yantra -->
+          <div class="mb-10">
+            <h3 class="text-2xl font-cinzel text-[#ff8800] mb-4 border-b border-[#421603] pb-2"
+              style="font-family: 'Cinzel', serif;">1.5.1 Chakra Yantra (Disk Instrument of Bhaskaracharya)</h3>
+            <p class="mb-4">
+              A flexible chain supports a disk with scales around its circumference. On the surface of this disk, a special construction is recommended to mark the E-W-N-S direction. This disk's horizontal line is called <strong>bhumi (earth)</strong>, the space above it is called <strong>akash (sky)</strong>, and the top point of the vertical line is called <strong>khardha</strong>. Attach a stick to the middle of it.
+            </p>
+            <p class="mb-4">
+              When you hold the disk in front of the sun, the stick will cast a shadow. The angle between a stick's shadow and the ground (horizontal) line is referred to as a <strong>unnata</strong>. Similar to this, the angle between the top point of the disk and the shadow of the stick is known as the <strong>natta</strong> angle.
+            </p>
+              <div class="p-4 bg-[#140601] border border-[#ff5500]/30 rounded-lg">
+                <p class="font-bold text-[#ffaa00]">
+                  The local time is calculated using natta and unnata. Half of this disk is called the Chaapa Yantra and the other half is known as the Turya Yantra.
+                </p>
+              </div>
+
+              <!-- Chakra Yantra Practical Simulation -->
+              <div class="mt-8 bg-[#0a0300] border border-[#ff5500]/50 rounded-xl p-6 shadow-inner flex flex-col md:flex-row gap-8 items-center">
+                
+                <!-- Left: Controls & Readouts -->
+                <div class="w-full md:w-1/3 flex flex-col gap-6">
+                  <div>
+                    <h4 class="text-[#ffaa00] font-bold text-lg mb-2">Practical Simulation</h4>
+                    <p class="text-sm text-orange-200/60 mb-4">Move the sun to cast a shadow and calculate the local time, or sync it with your real clock.</p>
+                    
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Sun Position (Time of Day)</label>
+                    <input type="range" id="chakra-time-slider" min="0" max="23.99" step="0.05" value="10" class="w-full accent-[#ff5500]">
+                    
+                    <button id="chakra-sync-btn" class="mt-4 w-full bg-[#ff5500]/20 hover:bg-[#ff5500]/40 border border-[#ff5500]/50 text-[#ffaa00] py-2 rounded transition-colors text-sm font-bold flex items-center justify-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      Sync to Current Time
+                    </button>
+                  </div>
+                  
+                  <div class="bg-black/50 p-4 rounded-lg border border-[#ff5500]/30">
+                    <div class="flex justify-between mb-2">
+                      <span class="text-orange-200/70 text-sm">Natta (Zenith Angle):</span>
+                      <span id="chakra-natta" class="text-[#ffaa00] font-mono font-bold">30.0°</span>
+                    </div>
+                    <div class="flex justify-between mb-4">
+                      <span class="text-orange-200/70 text-sm">Unnata (Altitude):</span>
+                      <span id="chakra-unnata" class="text-[#ffaa00] font-mono font-bold">60.0°</span>
+                    </div>
+                    
+                    <div class="bg-black/60 rounded border border-[#ff5500]/20 p-2 mb-4 text-xs font-mono text-orange-200/80">
+                      <div class="mb-1 text-[10px] text-orange-200/50 uppercase tracking-wider">Time Calculation Formula</div>
+                      <div id="chakra-formula">Time = Noon &plusmn; (Natta &divide; 15&deg;)</div>
+                      <div id="chakra-formula-calc" class="text-[#ffaa00] mt-1">= 12:00 - (30.0&deg; / 15&deg;) = 10.0 hrs</div>
+                    </div>
+                    
+                    <div class="border-t border-[#421603] pt-3">
+                      <div class="text-xs text-orange-200/50 uppercase tracking-wider mb-1">Calculated Local Time</div>
+                      <div id="chakra-clock" class="text-3xl font-mono text-[#ff5500]">10:00 AM</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Right: Visualization -->
+                <div class="w-full md:w-2/3 flex justify-center items-center bg-black rounded-lg border border-[#331100] p-4 relative overflow-hidden" style="min-height: 400px;">
+                  <svg id="chakra-svg" viewBox="-150 -150 300 170" class="w-full h-auto drop-shadow-[0_0_15px_rgba(255,85,0,0.3)]" style="max-width: 500px;">
+                    <!-- Sky/Earth Division -->
+                    <rect x="-200" y="0" width="400" height="200" fill="#110500" />
+                    
+                    <!-- Disk (Chakra) - Full Circle -->
+                    <circle cx="0" cy="0" r="130" fill="none" stroke="#ff5500" stroke-width="1" stroke-dasharray="2 4" />
+                    <circle cx="0" cy="0" r="140" fill="none" stroke="#ffaa00" stroke-width="4" stroke-dasharray="1 10.99" />
+                    
+                    <!-- Axes -->
+                    <line x1="-150" y1="0" x2="150" y2="0" stroke="#ff5500" stroke-width="1.5" />
+                    <line x1="0" y1="150" x2="0" y2="-150" stroke="#ff5500" stroke-width="1" stroke-dasharray="4 4" />
+                    <text x="135" y="-5" fill="#ffaa00" font-size="12" font-family="monospace">East</text>
+                    <text x="-145" y="-5" fill="#ffaa00" font-size="12" font-family="monospace">West</text>
+                    <text x="-45" y="-135" fill="#ffaa00" font-size="12" font-family="monospace">Khardha (Zenith)</text>
+                    <text x="-15" y="145" fill="#ffaa00" font-size="12" font-family="monospace" opacity="0.5">Nadir</text>
+  
+                    <!-- Stick (Gnomon) -->
+                    <line x1="0" y1="0" x2="0" y2="-50" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="0" cy="0" r="3" fill="#ffffff" />
+                    
+                    <!-- Angle Arcs -->
+                    <g id="chakra-angle-visuals">
+                      <line x1="-150" y1="0" x2="150" y2="0" stroke="#ffaa00" stroke-width="0.5" stroke-dasharray="2 4" opacity="0.3" />
+                      <path id="chakra-unnata-arc" fill="none" stroke="#00ffaa" stroke-width="2" stroke-dasharray="2 2" />
+                      <text id="chakra-unnata-lbl" fill="#00ffaa" font-size="10" font-family="monospace" text-anchor="middle" alignment-baseline="middle">Unnata</text>
+                      
+                      <path id="chakra-natta-arc" fill="none" stroke="#00aaff" stroke-width="2" stroke-dasharray="2 2" />
+                      <text id="chakra-natta-lbl" fill="#00aaff" font-size="10" font-family="monospace" text-anchor="middle" alignment-baseline="middle">Natta</text>
+                    </g>
+                    
+                    <!-- Shadow -->
+                    <line id="chakra-shadow" x1="0" y1="0" x2="-60" y2="0" stroke="#ff2200" stroke-width="4" stroke-linecap="round" opacity="0.9" />
+                    
+                    <!-- Ray to Sun -->
+                    <line id="chakra-ray" x1="0" y1="-50" x2="100" y2="-100" stroke="#ffdd00" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6" />
+
+                    <!-- Sun -->
+                    <g id="chakra-sun" transform="translate(100, -100)">
+                      <circle cx="0" cy="0" r="8" fill="#ffdd00" />
+                      <circle cx="0" cy="0" r="16" fill="#ffdd00" opacity="0.3" />
+                      <!-- Sunrays -->
+                      <path d="M 0 -20 L 0 -12 M 0 20 L 0 12 M -20 0 L -12 0 M 20 0 L 12 0 M -14 -14 L -8 -8 M 14 14 L 8 8 M 14 -14 L 8 -8 M -14 14 L -8 8" stroke="#ffdd00" stroke-width="1.5" stroke-linecap="round" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const slider = document.getElementById('chakra-time-slider');
+                  const syncBtn = document.getElementById('chakra-sync-btn');
+                  const sunGroup = document.getElementById('chakra-sun');
+                  const shadowLine = document.getElementById('chakra-shadow');
+                  const rayLine = document.getElementById('chakra-ray');
+                  const nattaTxt = document.getElementById('chakra-natta');
+                  const unnataTxt = document.getElementById('chakra-unnata');
+                  const clockTxt = document.getElementById('chakra-clock');
+                  const formulaTxt = document.getElementById('chakra-formula');
+                  const formulaCalcTxt = document.getElementById('chakra-formula-calc');
+                  const chakraSvg = document.getElementById('chakra-svg');
+                  const unnataArc = document.getElementById('chakra-unnata-arc');
+                  const nattaArc = document.getElementById('chakra-natta-arc');
+                  const unnataLbl = document.getElementById('chakra-unnata-lbl');
+                  const nattaLbl = document.getElementById('chakra-natta-lbl');
+                  const angleVisuals = document.getElementById('chakra-angle-visuals');
+  
+                  let syncInterval = null;
+                  let currentViewBoxHeight = 170;
+                  let targetViewBoxHeight = 170;
+                  let isAnimatingViewBox = false;
+
+                  function animateViewBox() {
+                    if (Math.abs(currentViewBoxHeight - targetViewBoxHeight) > 0.5) {
+                      currentViewBoxHeight += (targetViewBoxHeight - currentViewBoxHeight) * 0.04; // Slower, smoother easing
+                      chakraSvg.setAttribute('viewBox', `-150 -150 300 ${currentViewBoxHeight}`);
+                      requestAnimationFrame(animateViewBox);
+                    } else {
+                      currentViewBoxHeight = targetViewBoxHeight;
+                      chakraSvg.setAttribute('viewBox', `-150 -150 300 ${currentViewBoxHeight}`);
+                      isAnimatingViewBox = false;
+                    }
+                  }
+  
+                  function updateChakra(hours) {
+                    // Full 24 hour cycle. 6 AM is 0 degrees (East).
+                    let angleDeg = -(hours - 6) * 15; // 15 degrees per hour. Negative because SVG Y is down.
+                    let rad = angleDeg * Math.PI / 180;
+                    
+                    let r = 140; // distance of sun on SVG
+                    let sx = Math.cos(rad) * r;
+                    let sy = Math.sin(rad) * r;
+                    
+                    // Update Sun position
+                    sunGroup.setAttribute('transform', `translate(${sx}, ${sy})`); 
+                    
+                    // Ray starts at top of stick (0, -50) and goes to sun
+                    rayLine.setAttribute('x2', sx);
+                    rayLine.setAttribute('y2', sy);
+
+                    // Shadow Math
+                    let shadowX = 0;
+                    // If sun is above horizon (sy < 0 and between 6 and 18 hours approximately)
+                    if (sy < 0 && sx !== 0) {
+                      let m = (sy + 50) / sx;
+                      // If sun is lower than the top of the stick, sy > -50, m changes sign.
+                      if (sy < -50 || (sy > -50 && (sy+50)/sx * sx > 0)) {
+                         shadowX = 50 / m;
+                      } else {
+                         // Sun is below the stick top but above horizon, shadow goes off into infinity.
+                         shadowX = sx > 0 ? -200 : 200; 
+                      }
+                    } else if (sy >= 0) {
+                      // Sun is below horizon, no shadow
+                      shadowX = 0;
+                    }
+                    
+                    // Clamp shadow
+                    if (shadowX > 200) shadowX = 200;
+                    if (shadowX < -200) shadowX = -200;
+                    
+                    if (sy >= 0) {
+                      shadowLine.setAttribute('opacity', '0');
+                      rayLine.setAttribute('opacity', '0.2');
+                      angleVisuals.setAttribute('opacity', '0');
+                    } else {
+                      shadowLine.setAttribute('opacity', '0.9');
+                      rayLine.setAttribute('opacity', '0.6');
+                      shadowLine.setAttribute('x2', shadowX);
+                      angleVisuals.setAttribute('opacity', '1');
+                      
+                      // Translate angle visuals to the top of the stick where the ray originates
+                      angleVisuals.setAttribute('transform', 'translate(0, -50)');
+                      
+                      // Draw Angle Arcs based on the actual ray angle
+                      let ru = 25; // radius for unnata
+                      let rn = 40; // radius for natta
+                      
+                      let rayAngle = Math.atan2(sy + 50, sx);
+                      let ex = Math.cos(rayAngle);
+                      let ey = Math.sin(rayAngle);
+                      
+                      if (sx >= 0) { // East side
+                        unnataArc.setAttribute('d', `M ${ru} 0 A ${ru} ${ru} 0 0 0 ${ru*ex} ${ru*ey}`);
+                        nattaArc.setAttribute('d', `M ${rn*ex} ${rn*ey} A ${rn} ${rn} 0 0 0 0 ${-rn}`);
+                        
+                        let bisectU = rayAngle / 2;
+                        unnataLbl.setAttribute('x', (ru + 12) * Math.cos(bisectU));
+                        unnataLbl.setAttribute('y', (ru + 12) * Math.sin(bisectU));
+                        
+                        let bisectN = (rayAngle - Math.PI/2) / 2;
+                        nattaLbl.setAttribute('x', (rn + 12) * Math.cos(bisectN));
+                        nattaLbl.setAttribute('y', (rn + 12) * Math.sin(bisectN));
+                      } else { // West side
+                        unnataArc.setAttribute('d', `M ${-ru} 0 A ${ru} ${ru} 0 0 1 ${ru*ex} ${ru*ey}`);
+                        nattaArc.setAttribute('d', `M 0 ${-rn} A ${rn} ${rn} 0 0 0 ${rn*ex} ${rn*ey}`);
+                        
+                        let bisectU = (-Math.PI + rayAngle) / 2;
+                        unnataLbl.setAttribute('x', (ru + 12) * Math.cos(bisectU));
+                        unnataLbl.setAttribute('y', (ru + 12) * Math.sin(bisectU));
+                        
+                        let bisectN = (-Math.PI/2 + rayAngle) / 2;
+                        nattaLbl.setAttribute('x', (rn + 12) * Math.cos(bisectN));
+                        nattaLbl.setAttribute('y', (rn + 12) * Math.sin(bisectN));
+                      }
+                    }
+                    
+                    // Calculate Unnata (altitude) and Natta (zenith angle)
+                    // Altitude is 0 at horizon, 90 at zenith.
+                    let unnata = 0;
+                    if (sy < 0) {
+                       unnata = Math.asin(-sy/r) * 180 / Math.PI;
+                    } else {
+                       unnata = Math.asin(sy/r) * 180 / Math.PI; // Just show absolute angle below horizon
+                    }
+                    
+                    let natta = 90 - unnata;
+                    
+                    nattaTxt.textContent = natta.toFixed(1) + '°';
+                    unnataTxt.textContent = (sy >= 0 ? '-' : '') + unnata.toFixed(1) + '°';
+                    
+                    // Format Local Time
+                    let h = Math.floor(hours);
+                    let mTime = Math.floor((hours - h) * 60);
+                    let ampm = h >= 12 ? 'PM' : 'AM';
+                    let dispH = h % 12;
+                    if (dispH === 0) dispH = 12;
+                    let timeString = `${dispH}:${mTime.toString().padStart(2, '0')} ${ampm}`;
+                    
+                    // If nighttime, indicate it cannot be calculated and expand the diagram
+                    let newTargetHeight = 170;
+                    
+                    if (sy >= 0) {
+                      clockTxt.classList.add('text-blue-500', 'text-lg');
+                      clockTxt.classList.remove('text-[#ff5500]', 'text-3xl');
+                      clockTxt.innerHTML = `Cannot calculate - Night<br><span class="text-sm opacity-70">[${timeString}]</span>`;
+                      newTargetHeight = 310; // Expand to show full circle
+                    } else {
+                      clockTxt.classList.remove('text-blue-500', 'text-lg');
+                      clockTxt.classList.add('text-[#ff5500]', 'text-3xl');
+                      clockTxt.textContent = timeString;
+                      newTargetHeight = 170; // Shrink to show top semi-circle only
+                    }
+
+                    if (newTargetHeight !== targetViewBoxHeight) {
+                      targetViewBoxHeight = newTargetHeight;
+                      if (!isAnimatingViewBox) {
+                        isAnimatingViewBox = true;
+                        requestAnimationFrame(animateViewBox);
+                      }
+                    }
+                    
+                    // Update Formula display if daytime
+                    if (sy >= 0) {
+                      formulaTxt.parentElement.style.display = 'none';
+                    } else {
+                      formulaTxt.parentElement.style.display = 'block';
+                      let isMorning = sx >= 0;
+                      let sign = isMorning ? '-' : '+';
+                      let decimalTime = isMorning ? (12 - natta/15) : (12 + natta/15);
+                      
+                      formulaTxt.innerHTML = isMorning ? `Time = 12:00 - (Natta &divide; 15&deg;)` : `Time = 12:00 + (Natta &divide; 15&deg;)`;
+                      
+                      let mPart = Math.floor((decimalTime - Math.floor(decimalTime)) * 60);
+                      let mStr = mPart.toString().padStart(2, '0');
+                      let calcH = Math.floor(decimalTime) % 12;
+                      if (calcH === 0) calcH = 12;
+                      
+                      formulaCalcTxt.innerText = `= 12:00 ${sign} (${natta.toFixed(1)}° / 15°) = ${calcH}:${mStr} ${decimalTime >= 12 && decimalTime < 24 ? 'PM' : 'AM'}`;
+                    }
+                  }
+  
+                  slider.addEventListener('input', (e) => {
+                    if (syncInterval) {
+                      clearInterval(syncInterval);
+                      syncInterval = null;
+                      syncBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Sync to Current Time`;
+                      syncBtn.classList.remove('bg-[#ff5500]/40', 'text-white');
+                    }
+                    updateChakra(parseFloat(e.target.value));
+                  });
+  
+                  syncBtn.addEventListener('click', () => {
+                    if (syncInterval) {
+                      clearInterval(syncInterval);
+                      syncInterval = null;
+                      syncBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Sync to Current Time`;
+                      syncBtn.classList.remove('bg-[#ff5500]/40', 'text-white');
+                    } else {
+                      syncBtn.textContent = "Live Sync Active...";
+                      syncBtn.classList.add('bg-[#ff5500]/40', 'text-white');
+                      
+                      const doSync = () => {
+                        const now = new Date();
+                        let hrs = now.getHours() + (now.getMinutes() / 60);
+                        slider.value = hrs;
+                        updateChakra(hrs);
+                      };
+                      
+                      doSync();
+                      syncInterval = setInterval(doSync, 60000);
+                    }
+                  });
+  
+                  updateChakra(10);
+                });
+              </script>
+            </div>
+          </div>
+
+          <!-- 1.5.2 Dhanur Yantra -->
+          <div class="mb-10">
+            <h3 class="text-2xl font-cinzel text-[#ff8800] mb-4 border-b border-[#421603] pb-2"
+              style="font-family: 'Cinzel', serif;">1.5.2 Dhanur Yantra (Bow Instrument)</h3>
+            <p class="mb-4">
+              Dhanur yantra is half of a Chakra yantra and graduated at 180 degrees. Dhanu is a semi-circular disk with angular graduations and a stick pivoted at the centre. It is a type of protractor with a plumb bob arrangement.
+            </p>
+            <p class="mb-4">
+              It is a semi-circle whose radius has many digits, as there are degrees in radian and whose circumference is graduated with the marks of degrees and which is furnished with the chord and the arrow. The chord of the Dhanur yantra is equal to the diameter of the circle and its arrow is equal to the radius. It is mounted on a circle vertically with the two ends of its arc coinciding with the east and west points.
+            </p>
+            <p class="mb-4">
+              It is held vertically in such a way that its two ends coincide with the east and west points of the graduated level circle and then rotated along the level circle in such a way that the plane of the instrument coincides with the direction of the sun. Thus, the sun's azimuth is obtained.
+            </p>
+            <p class="mb-4">
+              Then a small stick on the arc of the Dhanur yantra is moved along the arc in such a way that its shadow falls at the centre of the level circle. Thus, the sun's altitude is obtained. Here the gnomon is represented by a plumb line CD dropped from a small stick, and its distance OD from the centre is the shadow for the desired time.
+            </p>
+            <div class="p-4 bg-[#140601] border border-[#ff5500]/30 rounded-lg">
+              <p class="font-bold text-[#ffaa00]">
+                It was used for measurement of natta and unatta kala ghatikas. By using this instrument, time can be calculated from the sun's altitude.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yasti Yantra Generator -->
+        <div id="yasti-generator"
+          class="mt-12 bg-black border border-[#ff5500]/70 rounded-xl p-8 shadow-[0_0_40px_rgba(255,85,0,0.3)] text-orange-100">
+
+          <h2 class="text-3xl font-cinzel text-[#ff6600] mb-6 text-center tracking-wide"
+            style="font-family: 'Cinzel', serif;">1.5.3 Yasti Yantra (Stick Machine) - Simulation</h2>
+
+          <div class="mb-8 p-6 bg-[#160702] border border-[#ff5500]/30 rounded-lg">
+            <h3 class="text-xl font-bold text-[#ff8800] mb-3 font-cinzel" style="font-family: 'Cinzel', serif;">Physics & Measurement Principle</h3>
+            <p class="text-sm text-orange-100/80 leading-relaxed mb-3">
+              <strong>Yasti yantra</strong> - A tool used to measure the angle between the direction of two stars. It is a physical, trigonometric analogue calculator that solves for unknown real-world heights and distances strictly using the geometric scale properties of Similar Triangles.
+            </p>
+            <p class="text-sm text-orange-100/80 leading-relaxed mb-3">
+              The projection of the stick's length along a horizontal axis at the two sightings, l<sub>1</sub> and l<sub>2</sub>, and also the heights to which the stick is elevated, h<sub>1</sub> and h<sub>2</sub>, can be noted on a board nearer to the stick.
+            </p>
+            <div class="math-eq katex-eq p-4 bg-[rgba(7,21,36,0.7)] border border-[var(--panel-border)] rounded-md text-center text-lg mt-4 mb-4">
+              If the object is H in height, and d is the distance between the two sightings, then Calculate the object height using the following formula:<br><br>
+              $$H = d \left[ \frac{l_2 h_1}{h_2 l_1} \right] + d = \left[ \frac{l_2 h_1}{l_1 h_2} + 1 \right] d$$
+            </div>
+            <p class="text-sm text-orange-100/80 leading-relaxed">
+              The instrument was also used for land surveying.
+            </p>
+          </div>
+
+          <div id="yasti-flex-container" class="flex flex-col lg:flex-row gap-8">
+            <!-- Left: Info & Calculator -->
+            <div id="yasti-controls-panel" class="w-full lg:w-1/2 flex flex-col gap-6 transition-all duration-300">
+
+              <!-- Tab Switcher -->
+              <div class="flex p-1 bg-[#1a0800] border border-[#ff5500]/30 rounded-lg mb-4">
+                <button id="mode-a-btn"
+                  class="flex-1 py-2 text-sm font-bold rounded-md transition-all duration-200 bg-[#ff5500] text-black shadow-[0_0_10px_rgba(255,85,0,0.5)]">
+                  Mode A (Single Sighting)</button>
+                <button id="mode-b-btn"
+                  class="flex-1 py-2 text-sm font-bold rounded-md transition-all duration-200 text-orange-200/50 hover:bg-[#ff5500]/10 hover:text-[#ff8800]">
+                  Mode B (Double Sighting)</button>
+              </div>
+
+              <!-- Mode A Panel -->
+              <div id="mode-a-panel" class="flex flex-col gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Distance (D) m</label>
+                    <input type="range" id="yasti-d" min="10" max="200" value="100" class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-d-val">100</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Stand Height (d) m</label>
+                    <input type="range" id="yasti-stand" min="0.5" max="3" step="0.1" value="1.5"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-stand-val">1.5</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Vert Proj (H) m</label>
+                    <input type="range" id="yasti-h" min="0.1" max="5" step="0.1" value="1.0"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-h-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Horiz Proj (L) m</label>
+                    <input type="range" id="yasti-l" min="0.1" max="5" step="0.1" value="2.0"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-l-val">2.0</div>
+                  </div>
+                </div>
+
+                <div class="mt-4 p-4 bg-[#180702] border border-[#ff5500]/40 rounded-lg shadow-inner">
+                  <h4 class="text-xs font-bold text-[#ff8800] mb-2 uppercase tracking-widest">Mathematical Derivation
+                  </h4>
+                  <div class="font-mono text-sm text-orange-100" id="mode-a-math">
+                    <!-- Math injected here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode B Panel (Hidden by default) -->
+              <div id="mode-b-panel" class="hidden flex-col gap-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="col-span-2">
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Baseline Shift (B) m</label>
+                    <input type="range" id="yasti-b" min="5" max="100" value="30" class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-b-val">30</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Vert Proj 1 (H1) m</label>
+                    <input type="range" id="yasti-h1" min="0.1" max="5" step="0.1" value="1.0"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-h1-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Horiz Proj 1 (L1) m</label>
+                    <input type="range" id="yasti-l1" min="0.1" max="5" step="0.1" value="2.0"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-l1-val">2.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Vert Proj 2 (H2) m</label>
+                    <input type="range" id="yasti-h2" min="0.1" max="5" step="0.1" value="1.0"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-h2-val">1.0</div>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-orange-200/70 mb-1">Horiz Proj 2 (L2) m</label>
+                    <input type="range" id="yasti-l2" min="0.1" max="5" step="0.1" value="2.5"
+                      class="w-full accent-[#ff5500]">
+                    <div class="text-right text-sm text-[#ff8800] font-mono" id="yasti-l2-val">2.5</div>
+                  </div>
+                </div>
+
+                <div class="mt-4 p-4 bg-[#180702] border border-[#ff5500]/40 rounded-lg shadow-inner">
+                  <h4 class="text-xs font-bold text-[#ff8800] mb-2 uppercase tracking-widest">Mathematical Derivation
+                  </h4>
+                  <div class="font-mono text-sm text-orange-100" id="mode-b-math">
+                    <!-- Math injected here -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right: Live 3D Viewport -->
+            <div id="yasti-viewport-wrapper"
+              class="w-full lg:w-1/2 min-h-[420px] h-[480px] bg-black rounded-xl border border-[#ff6600]/40 overflow-hidden relative shadow-inner flex-grow">
+              
+              <button id="yasti-fullscreen-btn" class="absolute top-2 right-2 bg-[#ff5500]/20 hover:bg-[#ff5500]/50 text-white rounded p-2 z-50 transition-colors" title="Toggle Fullscreen">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+              </button>
+
+              <div class="zoom-controls" style="position: absolute; right: 10px; top: 50px; z-index: 50; display: flex; flex-direction: column; gap: 8px;">
+                <button class="zoom-btn" id="yasti-zoom-in" style="width: 32px; height: 32px; background: rgba(255,85,0,0.2); border: 1px solid #ff5500; color: white; border-radius: 4px; font-weight: bold; cursor: pointer;">+</button>
+                <button class="zoom-btn" id="yasti-zoom-out" style="width: 32px; height: 32px; background: rgba(255,85,0,0.2); border: 1px solid #ff5500; color: white; border-radius: 4px; font-weight: bold; cursor: pointer;">-</button>
+              </div>
+
+              <div class="absolute top-2 left-2 text-xs text-orange-400/80 font-mono z-10 pointer-events-none">Drag to
+                rotate • Scroll or use +/- to zoom</div>
+              <div id="yasti-3d-container" class="w-full h-full relative"
+                style="width: 100%; height: 100%; min-height: 420px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const yastiBtn = document.getElementById('yasti-fullscreen-btn');
+            const viewportWrapper = document.getElementById('yasti-viewport-wrapper');
+            const zoomIn = document.getElementById('yasti-zoom-in');
+            const zoomOut = document.getElementById('yasti-zoom-out');
+            
+            // Elements for fullscreen HUD overlay
+            const controlsPanel = document.getElementById('yasti-controls-panel');
+            const flexContainer = document.getElementById('yasti-flex-container');
+            
+            if (yastiBtn && viewportWrapper) {
+              yastiBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                  viewportWrapper.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                  });
+                } else {
+                  document.exitFullscreen();
+                }
+              });
+
+              document.addEventListener('fullscreenchange', () => {
+                if (document.fullscreenElement === viewportWrapper) {
+                  viewportWrapper.classList.remove('h-[480px]', 'lg:w-1/2');
+                  viewportWrapper.classList.add('h-screen', 'w-full');
+                  
+                  // Move controls inside viewport for HUD effect
+                  viewportWrapper.appendChild(controlsPanel);
+                  controlsPanel.classList.remove('lg:w-1/2', 'w-full');
+                  controlsPanel.classList.add('absolute', 'bottom-4', 'left-4', 'w-[400px]', 'max-w-[90vw]', 'bg-black/85', 'p-5', 'rounded-xl', 'border', 'border-[#ff5500]/60', 'backdrop-blur-md', 'z-40', 'shadow-[0_0_20px_rgba(255,85,0,0.2)]', 'max-h-[90vh]', 'overflow-y-auto');
+                } else {
+                  viewportWrapper.classList.add('h-[480px]', 'lg:w-1/2');
+                  viewportWrapper.classList.remove('h-screen', 'w-full');
+                  
+                  // Restore controls to original location
+                  flexContainer.insertBefore(controlsPanel, viewportWrapper);
+                  controlsPanel.classList.add('lg:w-1/2', 'w-full');
+                  controlsPanel.classList.remove('absolute', 'bottom-4', 'left-4', 'w-[400px]', 'max-w-[90vw]', 'bg-black/85', 'p-5', 'rounded-xl', 'border', 'border-[#ff5500]/60', 'backdrop-blur-md', 'z-40', 'shadow-[0_0_20px_rgba(255,85,0,0.2)]', 'max-h-[90vh]', 'overflow-y-auto');
+                }
+                
+                // Trigger resize event so ThreeJS canvas updates
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+              });
+            }
+
+            // Fake zoom events by dispatching wheel events to the canvas
+            if (zoomIn && zoomOut) {
+              const dispatchWheel = (deltaY) => {
+                const canvas = viewportWrapper.querySelector('canvas');
+                if (canvas) {
+                  canvas.dispatchEvent(new WheelEvent('wheel', { deltaY, bubbles: true }));
+                }
+              };
+              zoomIn.addEventListener('click', () => dispatchWheel(-100));
+              zoomOut.addEventListener('click', () => dispatchWheel(100));
+            }
+          });
+        </script>
+      </div>
+    </section>
+
+    <section id="vernier" class="section">
+      <div class="grid-container">
+        <div class="simulator-box" id="vernier-sim-box">
+          <h2 style="font-family: 'Cinzel', serif; margin-bottom: 1.5rem;">Vernier Caliper Simulator</h2>
+          <div class="sim-graphic">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="vernier-zoom-in">+</button>
+              <button class="zoom-btn" id="vernier-zoom-out">-</button>
+            </div>
+            <button id="vernier-mode-btn" class="action-btn"
+              style="position: absolute; top: 15px; right: 15px; z-index: 10; background: var(--accent); color: #07131e; border-color: var(--accent);">Flip
+              to Depth Mode</button>
+            <svg id="vernier-svg" viewBox="-50 -100 900 450">
+              <defs>
+                <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#8e90a6" />
+                  <stop offset="50%" stop-color="#e3e4ed" />
+                  <stop offset="100%" stop-color="#8e90a6" />
+                </linearGradient>
+                <linearGradient id="wood-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#8b5a2b" />
+                  <stop offset="50%" stop-color="#a0522d" />
+                  <stop offset="100%" stop-color="#8b5a2b" />
+                </linearGradient>
+              </defs>
+              <g id="vernier-viewport">
+
+                <g id="depth-beaker" style="display: none; opacity: 0;">
+                  <rect x="408" y="475" width="64" height="235" fill="#2364aa" fill-opacity="0.35" rx="3" />
+                  <path
+                    d="M 395 470 L 406 475 L 406 712 Q 406 720 414 720 L 466 720 Q 474 720 474 712 L 474 475 L 485 470"
+                    fill="none" stroke="#fec601" stroke-width="3" stroke-linecap="round" />
+                  <line x1="406" y1="520" x2="422" y2="520" stroke="#fec601" stroke-width="1.5" />
+                  <line x1="406" y1="570" x2="418" y2="570" stroke="#fec601" stroke-width="1.5" />
+                  <line x1="406" y1="620" x2="422" y2="620" stroke="#fec601" stroke-width="1.5" />
+                  <line x1="406" y1="670" x2="418" y2="670" stroke="#fec601" stroke-width="1.5" />
+                  <line x1="408" y1="520" x2="472" y2="520" stroke="#73bfb8" stroke-width="2" stroke-dasharray="3,2" />
+                </g>
+
+                <g id="caliper-assembly">
+
+                  <g id="svg-test-objects">
+                    <rect id="svg-obj-cyl-out" x="100" y="100" width="240" height="120" fill="url(#metal-grad)"
+                      stroke="#585966" stroke-width="1.5" rx="8" style="display: none;" />
+
+                    <g id="svg-obj-cyl-in" style="display: none;">
+                      <rect x="90" y="15" width="10" height="45" fill="url(#metal-grad)" stroke="#585966"
+                        stroke-width="1" />
+                      <rect x="250" y="15" width="10" height="45" fill="url(#metal-grad)" stroke="#585966"
+                        stroke-width="1" />
+                      <rect x="90" y="15" width="170" height="6" fill="url(#metal-grad)" opacity="0.8" />
+                      <rect x="90" y="54" width="170" height="6" fill="url(#metal-grad)" opacity="0.8" />
+                    </g>
+
+                    <rect id="svg-obj-rect" x="100" y="100" width="425" height="120" fill="url(#wood-grad)"
+                      stroke="#5c3f2b" stroke-width="1.5" rx="4" style="display: none;" />
+
+                    <rect id="svg-obj-square" x="100" y="100" width="300" height="120" fill="#2a9d8f"
+                      fill-opacity="0.65" stroke="#1d665f" stroke-width="2" rx="6" style="display: none;" />
+                  </g>
+
+                  <rect x="50" y="60" width="700" height="40" fill="#d1d1d6" stroke="#4e4e54" stroke-width="1.5" />
+
+                  <path d="M 70 60 L 85 15 L 100 15 L 100 60 Z" fill="#d1d1d6" stroke="#4e4e54" stroke-width="1.5" />
+
+                  <path d="M 60 100 L 60 220 L 100 220 L 100 100 Z" fill="#d1d1d6" stroke="#4e4e54"
+                    stroke-width="1.5" />
+
+                  <g id="main-ticks"></g>
+
+
+                  <g id="vernier-slider" style="cursor: grab;">
+
+                    <rect id="depth-blade" x="150" y="78" width="510" height="4" fill="#a8a8b0" stroke="#4e4e54"
+                      stroke-width="0.5" />
+
+                    <rect x="140" y="25" width="20" height="15" fill="#a8a8b0" stroke="#4e4e54" stroke-width="1.5"
+                      rx="3" />
+                    <line x1="150" y1="40" x2="150" y2="50" stroke="#4e4e54" stroke-width="3" />
+
+
+
+                    <rect x="90" y="50" width="50" height="80" fill="#b0b0b8" stroke="#4e4e54" stroke-width="1.5" />
+
+                    <rect x="245" y="50" width="15" height="80" fill="#b0b0b8" stroke="#4e4e54" stroke-width="1.5" />
+
+                    <rect x="140" y="50" width="105" height="10" fill="#b0b0b8" stroke="#4e4e54" stroke-width="1.5" />
+
+                    <rect x="140" y="100" width="105" height="30" fill="#b0b0b8" stroke="#4e4e54" stroke-width="1.5" />
+
+
+                    <path d="M 100 60 L 100 15 L 115 15 L 130 60 Z" fill="#b0b0b8" stroke="#4e4e54"
+                      stroke-width="1.5" />
+
+                    <path d="M 100 100 L 100 220 L 140 220 L 140 100 Z" fill="#b0b0b8" stroke="#4e4e54"
+                      stroke-width="1.5" />
+
+
+                    <g id="vernier-ticks"></g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="test-objects-panel"
+            style="margin-top: 1.5rem; background: #091b2c; border: 1px solid var(--panel-border); padding: 1.2rem; border-radius: 6px;">
+            <h3 style="font-family: 'Cinzel', serif; color: var(--accent); margin-bottom: 0.8rem; font-size: 1.1rem;">
+              Test Objects Tray</h3>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+              <button class="action-btn active" id="obj-none-btn" style="padding: 0.5rem 1rem;">None</button>
+              <button class="action-btn" id="obj-cyl-out-btn" style="padding: 0.5rem 1rem;">Cylinder (Outer
+                Dia)</button>
+              <button class="action-btn" id="obj-cyl-in-btn" style="padding: 0.5rem 1rem;">Cylinder (Inner Dia)</button>
+              <button class="action-btn" id="obj-rect-btn" style="padding: 0.5rem 1rem;">Wooden Block (Rect)</button>
+              <button class="action-btn" id="obj-sq-btn" style="padding: 0.5rem 1rem;">Acrylic Block (Square)</button>
+              <button class="action-btn" id="obj-depth-btn"
+                style="padding: 0.5rem 1rem; border-color: var(--accent); color: var(--accent);">Depth Jar (Liquid
+                Beaker)</button>
+            </div>
+            <p id="object-desc"
+              style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.8rem; line-height: 1.4;">Drag the
+              slider or adjust inputs to measure freely.</p>
+          </div>
+        </div>
+        <div class="pull-out-panel">
+          <h3>Controls & Calculation</h3>
+
+          <div class="form-group">
+            <label for="vernier-val">Fine Adjust Slider (Direct Jaw Opening mm)</label>
+            <input type="range" id="vernier-val" min="0" max="60" step="0.1" value="10">
+            <div style="display: flex; justify-content: space-between; margin-top: 0.25rem;">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">0 mm</span>
+              <div style="display: flex; gap: 0.4rem; align-items: center;">
+                <button class="cal-btn-mini" id="vernier-step-dec" title="Step -0.1 mm"
+                  style="padding: 2px 8px; font-size: 0.8rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-
+                  0.1</button>
+                <button class="cal-btn-mini" id="vernier-step-inc" title="Step +0.1 mm"
+                  style="padding: 2px 8px; font-size: 0.8rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+
+                  0.1</button>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">60 mm</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div class="form-group">
+              <label for="vernier-msr-input">MSR (mm)</label>
+              <input type="number" id="vernier-msr-input" min="0" max="60" step="1" value="10">
+            </div>
+            <div class="form-group">
+              <label for="vernier-vsd-input">VSD (Coincidence)</label>
+              <input type="number" id="vernier-vsd-input" min="0" max="10" step="1" value="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="vernier-error">Zero Error (mm)</label>
+            <input type="number" id="vernier-error" min="-2" max="2" step="0.1" value="0">
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; margin: 1rem 0;">
+            <button id="vernier-calc-btn" class="action-btn active"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; display: flex; align-items: center; gap: 0.4rem;">
+              <span>Calculate</span>
+            </button>
+            <button id="vernier-reset-btn" class="action-btn"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; background: #0e2942; color: var(--text-muted); border-color: var(--panel-border);">
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <div class="readout" id="vernier-readout-box">
+            <div class="readout-header"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.6rem;">
+              <span
+                style="font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--accent); font-weight: 600; letter-spacing: 0.5px;">Live
+                Readout</span>
+            </div>
+            <div class="readout-row">
+              <span>Least Count (LC):</span>
+              <span style="color: var(--accent); font-weight: 600;">0.1 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Main Scale (MSR):</span>
+              <span id="vernier-msr">10.0 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Vernier Div (VSD):</span>
+              <span id="vernier-vsd-display">0</span>
+            </div>
+            <div class="readout-row">
+              <span>Vernier Scale (VSR):</span>
+              <span id="vernier-vsr">0.0 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Observed Reading:</span>
+              <span id="vernier-observed">10.0 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Zero Error:</span>
+              <span id="vernier-error-display">0.0 mm</span>
+            </div>
+            <div class="readout-divider" style="margin: 0.8rem 0; border-top: 1px dashed var(--panel-border);"></div>
+            <div class="readout-row corrected-row"
+              style="align-items: center; justify-content: space-between; padding-top: 0.2rem;">
+              <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Corrected Reading:</span>
+              <div class="flap-container-wrapper" style="display: flex; align-items: center; gap: 0.3rem;">
+                <div id="vernier-corrected-flap" class="split-flap-board"></div>
+                <span id="vernier-corrected" style="display: none;">10.0 mm</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="iks-grid" style="margin-top: 2rem;">
+        <div class="iks-item math-panel">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            Vernier Caliper Mathematical Formulation</h3>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">1. Least
+              Count (LC):</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{LC} = 1\text{ MSD} - 1\text{ VSD} = \frac{1\text{ MSD}}{\text{Total Vernier Divisions}} =
+              \frac{1\text{ mm}}{10} = 0.1\text{ mm}$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">2.
+              Observed Reading:</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{Observed Reading} = \text{MSR} + \Big(\text{VSD} \times \text{LC}\Big)$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">3.
+              Corrected Reading:</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{Corrected Reading} = \text{Observed Reading} - \Big(\pm\text{Zero Error}\Big)$$
+            </div>
+          </div>
+
+          <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            <em>Zero Error Convention:</em> When the zero mark of the vernier scale is ahead (to the right) of main
+            scale 0, the error is <strong>positive (+e)</strong> and is subtracted. When behind (to the left), the error
+            is <strong>negative (-e)</strong> and subtracting it adds the correction.
+          </p>
+        </div>
+
+        <div class="iks-item">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            What is a Vernier Caliper?</h3>
+          <p>
+            A <strong>Vernier Caliper</strong> is a high-precision mechanical metrology instrument invented by French
+            mathematician <strong>Pierre Vernier</strong> in 1631. It is engineered to measure external dimensions,
+            internal bores, and depths with a resolution of 0.1 mm.
+          </p>
+          <p style="margin-top: 0.8rem;">
+            <strong>Principle of Vernier Coincidence:</strong> It utilizes two co-axial scales where $10$ divisions of
+            the sliding Vernier scale coincide precisely with $9$ divisions of the stationary Main Scale:
+          </p>
+          <div class="math-eq katex-eq"
+            style="background: rgba(7, 21, 36, 0.7); padding: 0.7rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); margin: 0.8rem 0; font-size: 1rem; overflow-x: auto;">
+            $$10\text{ VSD} = 9\text{ MSD} \implies 1\text{ VSD} = \frac{9}{10}\text{ mm} = 0.9\text{ mm}$$
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+            This differential relationship provides an accuracy $10\times$ finer than the smallest 1 mm graduation of
+            the main scale.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section id="screw" class="section">
+      <div class="grid-container">
+        <div class="simulator-box" id="screw-sim-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-family: 'Cinzel', serif; margin: 0;">Screw Gauge Simulator</h2>
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+              <label
+                style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; color: var(--text-muted);">
+                <input type="checkbox" id="screw-toggle-labels" style="cursor: pointer;">
+                Diagram Labels
+              </label>
+              <label
+                style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; color: var(--text-muted);">
+                <input type="checkbox" id="screw-toggle-object" checked style="cursor: pointer;">
+                Clamped Object (Sphere)
+              </label>
+            </div>
+          </div>
+          <div class="sim-graphic">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="screw-zoom-in" title="Zoom In">+</button>
+              <button class="zoom-btn" id="screw-zoom-out" title="Zoom Out">-</button>
+              <button class="zoom-btn" id="screw-zoom-reset" title="Reset View" style="font-size: 0.85rem;">1:1</button>
+            </div>
+            <svg id="screw-svg" viewBox="0 0 850 320" style="width: 100%; height: 100%;">
+              <defs>
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00875a" />
+                </marker>
+                <linearGradient id="frame-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#2a3f55" />
+                  <stop offset="25%" stop-color="#1c2d3e" />
+                  <stop offset="70%" stop-color="#14212e" />
+                  <stop offset="100%" stop-color="#0e1720" />
+                </linearGradient>
+                <linearGradient id="metal-linear" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#e4ecf3" />
+                  <stop offset="35%" stop-color="#ffffff" />
+                  <stop offset="70%" stop-color="#cbd5e1" />
+                  <stop offset="100%" stop-color="#94a3b8" />
+                </linearGradient>
+                <linearGradient id="sleeve-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f8fafc" />
+                  <stop offset="40%" stop-color="#ffffff" />
+                  <stop offset="75%" stop-color="#e2e8f0" />
+                  <stop offset="100%" stop-color="#cbd5e1" />
+                </linearGradient>
+                <linearGradient id="thimble-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#e2e8f0" />
+                  <stop offset="30%" stop-color="#ffffff" />
+                  <stop offset="70%" stop-color="#cbd5e1" />
+                  <stop offset="100%" stop-color="#94a3b8" />
+                </linearGradient>
+                <radialGradient id="sphere-3d" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#ff7675" />
+                  <stop offset="50%" stop-color="#d63031" />
+                  <stop offset="100%" stop-color="#5c0d11" />
+                </radialGradient>
+              </defs>
+
+              <!-- Realistic Rectangular Curved Cast Frame -->
+              <g id="screw-frame">
+                <!-- Smooth, perfectly connected rectangular U-Frame with generous corner radii -->
+                <path d="M 68 116
+                         L 100 116
+                         L 100 185
+                         C 100 235, 145 270, 205 270
+                         C 265 270, 310 235, 310 185
+                         L 310 116
+                         L 342 116
+                         L 342 185
+                         C 342 258, 280 298, 205 298
+                         C 130 298, 68 258, 68 185
+                         Z" fill="url(#frame-grad)" stroke="#0c1722" stroke-width="2" stroke-linejoin="round" />
+
+                <!-- Left Anvil Support Boss (Smoothly enclosing the anvil stem) -->
+                <path d="M 60 124 
+                         L 100 124 
+                         L 100 176 
+                         L 60 176 
+                         C 56 176, 52 172, 52 168 
+                         L 52 132 
+                         C 52 128, 56 124, 60 124 Z" fill="url(#frame-grad)" stroke="#0c1722" stroke-width="2" />
+
+                <!-- Right Barrel Support Hub (Smoothly mating to the sleeve) -->
+                <rect x="310" y="118" width="34" height="64" rx="4" fill="url(#frame-grad)" stroke="#0c1722"
+                  stroke-width="2" />
+
+                <!-- Frame Inset Plate & Range Label -->
+                <rect x="155" y="274" width="100" height="18" rx="3" fill="#081018" stroke="#1c2d3e"
+                  stroke-width="1.2" />
+                <text x="205" y="287" fill="#fec601" font-size="10.5" font-weight="700" font-family="'Cinzel', serif"
+                  text-anchor="middle" letter-spacing="1px">0 - 15 mm</text>
+              </g>
+
+              <!-- Left Anvil (Fixed Carbide Measuring Face) -->
+              <g id="anvil">
+                <!-- Cylindrical Anvil Body seamlessly emerging from boss -->
+                <rect x="74" y="134" width="46" height="32" rx="2" fill="url(#metal-linear)" stroke="#334155"
+                  stroke-width="1.2" />
+                <!-- Hardened Carbide Anvil Tip (Face exactly at x=130) -->
+                <rect x="120" y="132" width="10" height="36" rx="1.5" fill="#94a3b8" stroke="#1e293b"
+                  stroke-width="1.2" />
+                <line x1="130" y1="126" x2="130" y2="174" stroke="#64748b" stroke-width="1.2" />
+              </g>
+
+              <!-- Measured Object (Red Test Sphere) -->
+              <g id="screw-object-group" style="display: none;">
+                <circle id="screw-object" cx="130" cy="150" r="0" fill="url(#sphere-3d)" stroke="#921b1b"
+                  stroke-width="1" />
+              </g>
+
+              <!-- Spindle (Movable left-right rod with Carbide Tip) -->
+              <g id="spindle">
+                <!-- Precision Ground Steel Spindle -->
+                <rect x="130" y="134" width="260" height="32" rx="1" fill="url(#metal-linear)" stroke="#334155"
+                  stroke-width="1.2" />
+                <!-- Hardened Carbide Spindle Tip at x=130 -->
+                <rect x="130" y="132" width="8" height="36" rx="1.5" fill="#94a3b8" stroke="#1e293b"
+                  stroke-width="1.2" />
+                <line x1="130" y1="132" x2="130" y2="168" stroke="#1e293b" stroke-width="1.8" />
+              </g>
+
+              <!-- Main Sleeve & Pitch Scale Barrel -->
+              <g id="sleeve">
+                <!-- Stationary Cylindrical Sleeve/Barrel with soft curved bevels -->
+                <rect x="270" y="125" width="220" height="50" rx="4" fill="url(#sleeve-grad)" stroke="#334155"
+                  stroke-width="1.5" />
+                <!-- Center Datum / Baseline at y=150 -->
+                <line x1="275" y1="150" x2="480" y2="150" stroke="#0f172a" stroke-width="1.8" />
+                <!-- Dynamic Main Scale Graduations rendered via JS -->
+                <g id="main-scale-ticks"></g>
+              </g>
+
+              <!-- Movable Thimble, Beveled Scale & Ratchet Assembly -->
+              <g id="thimble" style="cursor: grab;">
+                <!-- Beveled Cone (Thimble Scale) leading to sleeve -->
+                <polygon points="0,121 40,111 40,189 0,179" fill="url(#thimble-grad)" stroke="#334155"
+                  stroke-width="1.5" stroke-linejoin="round" />
+                <!-- Circular scale tick marks rendered dynamically via JS -->
+                <g id="circular-ticks"></g>
+                <!-- Thimble Cylindrical Body with smooth rounded ends -->
+                <rect x="40" y="111" width="105" height="78" rx="3" fill="url(#thimble-grad)" stroke="#334155"
+                  stroke-width="1.5" />
+                <!-- Minimalist Knurling lines on thimble -->
+                <g id="thimble-knurling" opacity="0.45">
+                  <line x1="55" y1="112" x2="55" y2="188" stroke="#334155" stroke-width="1.2" stroke-dasharray="2,3" />
+                  <line x1="70" y1="112" x2="70" y2="188" stroke="#334155" stroke-width="1.2" stroke-dasharray="2,3" />
+                  <line x1="85" y1="112" x2="85" y2="188" stroke="#334155" stroke-width="1.2" stroke-dasharray="2,3" />
+                  <line x1="100" y1="112" x2="100" y2="188" stroke="#334155" stroke-width="1.2"
+                    stroke-dasharray="2,3" />
+                  <line x1="115" y1="112" x2="115" y2="188" stroke="#334155" stroke-width="1.2"
+                    stroke-dasharray="2,3" />
+                  <line x1="130" y1="112" x2="130" y2="188" stroke="#334155" stroke-width="1.2"
+                    stroke-dasharray="2,3" />
+                </g>
+                <!-- Ratchet Stop Mechanism (Smoothly stepped) -->
+                <rect x="145" y="127" width="40" height="46" rx="3" fill="#334155" stroke="#1e293b"
+                  stroke-width="1.5" />
+                <rect x="185" y="134" width="10" height="32" rx="2" fill="#1e293b" stroke="#0f172a"
+                  stroke-width="1.2" />
+                <!-- Ratchet grooves -->
+                <g id="ratchet-grooves">
+                  <line x1="150" y1="134" x2="150" y2="166" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+                  <line x1="157" y1="134" x2="157" y2="166" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+                  <line x1="164" y1="134" x2="164" y2="166" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+                  <line x1="171" y1="134" x2="171" y2="166" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" />
+                </g>
+              </g>
+
+              <!-- Callout Labels Group (Default OFF) -->
+              <g id="screw-labels-group" style="display: none;">
+                <!-- 1. Anvil Label -->
+                <g class="diagram-callout" id="callout-anvil">
+                  <rect x="85" y="32" width="62" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="116" y="51" fill="#005030" font-size="12" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Anvil</text>
+                  <line x1="116" y1="60" x2="116" y2="132" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green)" />
+                </g>
+
+                <!-- 2. Spindle Label -->
+                <g class="diagram-callout" id="callout-spindle">
+                  <rect x="185" y="32" width="75" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="222" y="51" fill="#005030" font-size="12" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Spindle</text>
+                  <line id="callout-spindle-line" x1="222" y1="60" x2="222" y2="132" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green)" />
+                </g>
+
+                <!-- 3. Datum line / Centre line Label -->
+                <g class="diagram-callout" id="callout-datum">
+                  <rect x="330" y="24" width="120" height="38" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="390" y="40" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Datum line/</text>
+                  <text x="390" y="54" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Centre line</text>
+                  <line x1="390" y1="62" x2="390" y2="145" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green)" />
+                </g>
+
+                <!-- 4. Main scale Label -->
+                <g class="diagram-callout" id="callout-main-scale">
+                  <rect x="360" y="228" width="95" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="407" y="247" fill="#005030" font-size="12" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Main scale</text>
+                  <line x1="407" y1="228" x2="407" y2="173" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green)" />
+                </g>
+
+                <!-- 5. Thimble scale Label -->
+                <g class="diagram-callout" id="callout-thimble-scale">
+                  <rect id="callout-thimble-scale-box" x="515" y="240" width="105" height="28" fill="#ffffff"
+                    stroke="#00875a" stroke-width="1.5" />
+                  <text id="callout-thimble-scale-text" x="567" y="259" fill="#005030" font-size="12" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Thimble scale</text>
+                  <line id="callout-thimble-scale-line" x1="540" y1="240" x2="430" y2="165" stroke="#00875a"
+                    stroke-width="1.5" marker-end="url(#arrow-green)" />
+                </g>
+
+                <!-- 6. Ratchet Label -->
+                <g class="diagram-callout" id="callout-ratchet">
+                  <rect id="callout-ratchet-box" x="665" y="240" width="76" height="28" fill="#ffffff" stroke="#00875a"
+                    stroke-width="1.5" />
+                  <text id="callout-ratchet-text" x="703" y="259" fill="#005030" font-size="12" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Ratchet</text>
+                  <line id="callout-ratchet-line" x1="703" y1="240" x2="600" y2="173" stroke="#00875a"
+                    stroke-width="1.5" marker-end="url(#arrow-green)" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Controls & Calculations Panel -->
+        <div class="pull-out-panel">
+          <h3 style="font-family: 'Cinzel', serif; color: var(--accent); margin-bottom: 0.8rem; font-size: 1.15rem;">
+            Controls & Calculation</h3>
+
+          <div class="form-group">
+            <label for="screw-val">Spindle Opening / Distance (mm)</label>
+            <input type="range" id="screw-val" min="0" max="15" step="0.01" value="3.5">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.3rem;">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">0 mm</span>
+              <div style="display: flex; gap: 0.3rem; align-items: center;">
+                <button class="cal-btn-mini" id="screw-step-m1" title="-1.0 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-1.0</button>
+                <button class="cal-btn-mini" id="screw-step-m01" title="-0.1 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-0.1</button>
+                <button class="cal-btn-mini" id="screw-step-m001" title="-0.01 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-0.01</button>
+                <button class="cal-btn-mini" id="screw-step-p001" title="+0.01 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+0.01</button>
+                <button class="cal-btn-mini" id="screw-step-p01" title="+0.1 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+0.1</button>
+                <button class="cal-btn-mini" id="screw-step-p1" title="+1.0 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+1.0</button>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">15 mm</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div class="form-group">
+              <label for="screw-msr-input">Main Scale (MSR mm)</label>
+              <input type="number" id="screw-msr-input" min="0" max="15" step="1" value="3">
+            </div>
+            <div class="form-group">
+              <label for="screw-csr-input">Circular Scale (CSR Div)</label>
+              <input type="number" id="screw-csr-input" min="0" max="99" step="1" value="50">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem;">
+            <div class="form-group">
+              <label for="screw-pitch-input">Pitch (mm)</label>
+              <input type="number" id="screw-pitch-input" min="0.1" max="2.0" step="0.1" value="1.0">
+            </div>
+            <div class="form-group">
+              <label for="screw-divs-input">Circ Divisions</label>
+              <input type="number" id="screw-divs-input" min="10" max="200" step="10" value="100">
+            </div>
+            <div class="form-group">
+              <label for="screw-error">Zero Error (mm)</label>
+              <input type="number" id="screw-error" min="-0.5" max="0.5" step="0.01" value="0">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; margin: 0.8rem 0;">
+            <button id="screw-calc-btn" class="action-btn active"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; display: flex; align-items: center; gap: 0.4rem;">
+              <span>Calculate</span>
+            </button>
+            <button id="screw-reset-btn" class="action-btn"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; background: #0e2942; color: var(--text-muted); border-color: var(--panel-border);">
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <div class="readout" id="screw-readout-box">
+            <div class="readout-header"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+              <span
+                style="font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--accent); font-weight: 600; letter-spacing: 0.5px;">Live
+                Readout</span>
+            </div>
+            <div class="readout-row">
+              <span>Least Count (LC):</span>
+              <span id="screw-lc-display" style="color: var(--accent); font-weight: 600;">0.01 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Pitch Scale Reading (PSR/MSR):</span>
+              <span id="screw-psr">3.0 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Circular Scale Reading (CSR):</span>
+              <span id="screw-csr">0.50 mm (Div: 50)</span>
+            </div>
+            <div class="readout-row">
+              <span>Observed Value:</span>
+              <span id="screw-observed">3.50 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Zero Error:</span>
+              <span id="screw-error-display">0.00 mm</span>
+            </div>
+            <div class="readout-divider" style="margin: 0.6rem 0; border-top: 1px dashed var(--panel-border);"></div>
+            <div class="readout-row corrected-row"
+              style="align-items: center; justify-content: space-between; padding-top: 0.2rem;">
+              <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Corrected Value:</span>
+              <div class="flap-container-wrapper" style="display: flex; align-items: center; gap: 0.3rem;">
+                <div id="screw-corrected-flap" class="split-flap-board"></div>
+                <span id="screw-corrected" style="display: none;">3.50 mm</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Intermediate Calculations -->
+          <div id="screw-steps-box"
+            style="margin-top: 1rem; background: rgba(7, 21, 36, 0.6); border: 1px solid var(--panel-border); border-radius: 6px; padding: 0.8rem;">
+            <div
+              style="font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">
+              Calculation Breakdown</div>
+            <div id="screw-steps-content"
+              style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; font-family: monospace;">
+              <div>1. LC = 1.00 mm / 100 = 0.0100 mm</div>
+              <div>2. CSR = 50 × 0.0100 mm = 0.500 mm</div>
+              <div>3. Observed = 3.00 mm + 0.500 mm = 3.500 mm</div>
+              <div>4. Corrected = 3.500 mm - (0.000 mm) = 3.500 mm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational & Mathematical Panels -->
+      <div class="iks-grid" style="margin-top: 2rem;">
+        <div class="iks-item math-panel">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            Screw Gauge Mathematical Formulation</h3>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">1. Least
+              Count (LC):</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{LC} = \frac{\text{Pitch}}{\text{Total Circular Scale Divisions}} = \frac{1\text{ mm}}{100} =
+              0.01\text{ mm}$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">2.
+              Observed Reading:</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{Observed Reading} = \text{PSR} + \Big(\text{CSR} \times \text{LC}\Big)$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">3.
+              Corrected Reading:</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{Corrected Reading} = \text{Observed Reading} - \Big(\pm\text{Zero Error}\Big)$$
+            </div>
+          </div>
+
+          <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            <em>Zero Error Convention:</em> When the zero mark of the circular scale lies <strong>below</strong> the
+            reference/datum line upon closing the jaws, the error is <strong>positive (+e)</strong> and is subtracted.
+            When it lies <strong>above</strong> the reference line, the error is <strong>negative (-e)</strong> and
+            subtracting it adds the correction.
+          </p>
+        </div>
+
+        <div class="iks-item">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            What is a Screw Gauge?</h3>
+          <p>
+            A <strong>Screw Gauge (Micrometer)</strong> is an ultra-precise metrology instrument invented by William
+            Gascoigne in 1638 and perfected by Jean Laurent Palmer in 1848. It is engineered to measure tiny dimensions
+            such as the diameter of wires, thickness of thin sheets, and spherical diameters with standard resolution of
+            <strong>0.01 mm (10 µm)</strong>.
+          </p>
+          <p style="margin-top: 0.8rem;">
+            <strong>Principle of the Micrometer Screw:</strong> It converts circular rotational motion of the thimble
+            into linear axial movement of the spindle via a finely threaded screw mechanism:
+          </p>
+          <div class="math-eq katex-eq"
+            style="background: rgba(7, 21, 36, 0.7); padding: 0.7rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); margin: 0.8rem 0; font-size: 1rem; overflow-x: auto;">
+            $$\text{Linear Advance per Rotation} = \text{Pitch} = 1.0\text{ mm}$$
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+            Subdividing each turn into 100 circular divisions enables direct, repeatable measurement down to one
+            hundredth of a millimeter, while the <strong>Ratchet stop</strong> guarantees uniform measuring pressure
+            without deforming the measured specimen.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="spherometer" class="section">
+      <div class="grid-container">
+        <div class="simulator-box" id="spherometer-sim-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-family: 'Cinzel', serif; margin: 0;">Spherometer Simulator</h2>
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+              <label
+                style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; color: var(--text-muted);">
+                <input type="checkbox" id="sph-toggle-labels" style="cursor: pointer;">
+                Diagram Labels
+              </label>
+            </div>
+          </div>
+          <div class="sim-graphic">
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="sph-zoom-in" title="Zoom In">+</button>
+              <button class="zoom-btn" id="sph-zoom-out" title="Zoom Out">-</button>
+              <button class="zoom-btn" id="sph-zoom-reset" title="Reset View" style="font-size: 0.85rem;">1:1</button>
+            </div>
+            <svg id="spherometer-svg" viewBox="0 0 850 340" style="width: 100%; height: 100%;">
+              <defs>
+                <marker id="arrow-green-sph" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00875a" />
+                </marker>
+              </defs>
+
+              <!-- Base Surface (Flat Plate / Curved Lens) -->
+              <g id="spherometer-surface-group">
+                <path id="spherometer-base" d="M 180 275 L 620 275" stroke="#3da5d9" stroke-width="3"
+                  stroke-linecap="square" />
+                <text id="sph-surface-label" x="400" y="305" fill="#73bfb8" font-size="11" text-anchor="middle"
+                  font-family="'Outfit', sans-serif">Base: Flat Glass Plate</text>
+              </g>
+
+              <!-- Minimalist Line-Art Tripod Base Frame -->
+              <g id="spherometer-frame">
+                <!-- Back Leg & Arm (Schematic perspective) -->
+                <line x1="400" y1="165" x2="345" y2="148" stroke="#ffffff" stroke-width="10" stroke-linecap="square" />
+                <line x1="400" y1="165" x2="345" y2="148" stroke="#000000" stroke-width="2" />
+                <rect x="339" y="148" width="12" height="85" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                <polygon points="339,233 351,233 345,248" fill="#ffffff" stroke="#000000" stroke-width="2" />
+
+                <!-- Left Arm & Fixed Leg -->
+                <line x1="400" y1="172" x2="260" y2="172" stroke="#ffffff" stroke-width="12" stroke-linecap="square" />
+                <line x1="400" y1="166" x2="260" y2="166" stroke="#000000" stroke-width="2" />
+                <line x1="400" y1="178" x2="260" y2="178" stroke="#000000" stroke-width="2" />
+                <!-- Left Leg Cylinder & Pointed Tip -->
+                <rect x="252" y="165" width="16" height="95" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                <polygon points="252,260 268,260 260,275" fill="#ffffff" stroke="#000000" stroke-width="2" />
+
+                <!-- Right Arm & Fixed Leg -->
+                <line x1="400" y1="172" x2="540" y2="172" stroke="#ffffff" stroke-width="12" stroke-linecap="square" />
+                <line x1="400" y1="166" x2="540" y2="166" stroke="#000000" stroke-width="2" />
+                <line x1="400" y1="178" x2="540" y2="178" stroke="#000000" stroke-width="2" />
+                <!-- Right Leg Cylinder & Pointed Tip -->
+                <rect x="532" y="165" width="16" height="95" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                <polygon points="532,260 548,260 540,275" fill="#ffffff" stroke="#000000" stroke-width="2" />
+
+                <!-- Central Nut / Hub (Line-art cylinder) -->
+                <rect id="spherometer-central-nut" x="372" y="145" width="56" height="50" fill="#ffffff"
+                  stroke="#000000" stroke-width="2" />
+                <line x1="372" y1="156" x2="428" y2="156" stroke="#000000" stroke-width="1.2" stroke-dasharray="3,3" />
+                <line x1="372" y1="184" x2="428" y2="184" stroke="#000000" stroke-width="1.2" stroke-dasharray="3,3" />
+              </g>
+
+              <!-- Fixed Vertical Pitch Scale (Diagrammatic Rectangular Ruler) -->
+              <g id="spherometer-ruler-assembly">
+                <!-- Upright Rectangular Pillar attached beside right leg -->
+                <rect x="552" y="32" width="36" height="156" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                <line x1="552" y1="32" x2="552" y2="188" stroke="#000000" stroke-width="2.5" />
+                <!-- Ruler Graduations (Center 0 at y=95) -->
+                <g id="ruler-ticks">
+                  <!-- Major 0 line at y=95 -->
+                  <line x1="552" y1="95" x2="574" y2="95" stroke="#000000" stroke-width="2" />
+                  <text x="578" y="99" fill="#000000" font-size="12" font-weight="bold"
+                    font-family="'Outfit', sans-serif">0</text>
+
+                  <!-- Upper cm line at y=45 (+1cm / 10mm) -->
+                  <line x1="552" y1="45" x2="574" y2="45" stroke="#000000" stroke-width="2" />
+                  <text x="576" y="49" fill="#000000" font-size="10.5" font-weight="bold"
+                    font-family="'Outfit', sans-serif">+1cm</text>
+
+                  <!-- Lower cm line at y=145 (-1cm / -10mm) -->
+                  <line x1="552" y1="145" x2="574" y2="145" stroke="#000000" stroke-width="2" />
+                  <text x="577" y="149" fill="#000000" font-size="10.5" font-weight="bold"
+                    font-family="'Outfit', sans-serif">-1cm</text>
+
+                  <!-- Intermediate mm ticks -->
+                  <line x1="552" y1="55" x2="563" y2="55" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="65" x2="563" y2="65" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="70" x2="569" y2="70" stroke="#000000" stroke-width="1.5" />
+                  <line x1="552" y1="75" x2="563" y2="75" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="85" x2="563" y2="85" stroke="#000000" stroke-width="1.2" />
+
+                  <line x1="552" y1="105" x2="563" y2="105" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="115" x2="563" y2="115" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="120" x2="569" y2="120" stroke="#000000" stroke-width="1.5" />
+                  <line x1="552" y1="125" x2="563" y2="125" stroke="#000000" stroke-width="1.2" />
+                  <line x1="552" y1="135" x2="563" y2="135" stroke="#000000" stroke-width="1.2" />
+                </g>
+              </g>
+
+              <!-- Movable Central Screw Assembly (Central Screw + Large Disc + Top Knob) -->
+              <g id="spherometer-screw" style="cursor: grab;">
+                <!-- Central Threaded Screw Rod with Hatching -->
+                <g id="screw-rod-group">
+                  <rect x="388" y="95" width="24" height="165" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                  <!-- Diagonal thread hatching lines -->
+                  <line x1="388" y1="105" x2="412" y2="110" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="115" x2="412" y2="120" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="125" x2="412" y2="130" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="135" x2="412" y2="140" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="195" x2="412" y2="200" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="205" x2="412" y2="210" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="215" x2="412" y2="220" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="225" x2="412" y2="230" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="235" x2="412" y2="240" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="245" x2="412" y2="250" stroke="#000000" stroke-width="1.3" />
+                  <line x1="388" y1="255" x2="412" y2="260" stroke="#000000" stroke-width="1.3" />
+                  <!-- Conical Pointed Tip of Central Screw -->
+                  <polygon id="sph-screw-tip" points="388,260 412,260 400,275" fill="#ffffff" stroke="#000000"
+                    stroke-width="2" />
+                </g>
+
+                <!-- Minimalist Line-Art Circular Disc -->
+                <g id="disc-assembly">
+                  <ellipse id="sph-disc-base" cx="400" cy="95" rx="152" ry="21" fill="#ffffff" stroke="#000000"
+                    stroke-width="2" />
+                  <!-- Inner rim guide ellipse -->
+                  <ellipse cx="400" cy="95" rx="142" ry="19.5" fill="none" stroke="#000000" stroke-width="0.8"
+                    opacity="0.4" />
+                  <!-- Radial ticks on the circular disc rim rendered via JS -->
+                  <g id="disc-ticks"></g>
+                  <!-- Prominent 0 mark at front center of disc -->
+                  <rect x="393" y="103" width="14" height="13" fill="#ffffff" stroke="#000000" stroke-width="0.8" />
+                  <text id="sph-disc-zero" x="400" y="113" fill="#000000" font-size="11" font-weight="bold"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">0</text>
+                </g>
+
+                <!-- Minimalist Diagrammatic Knob / Head -->
+                <g id="sph-knob">
+                  <path d="M 384 45 C 384 45, 388 65, 384 85 L 416 85 C 412 65, 416 45, 416 45 Z" fill="#ffffff"
+                    stroke="#000000" stroke-width="2" />
+                  <!-- Knurling line indicators on knob -->
+                  <line x1="392" y1="52" x2="392" y2="78" stroke="#000000" stroke-width="1.2" />
+                  <line x1="400" y1="50" x2="400" y2="80" stroke="#000000" stroke-width="1.2" />
+                  <line x1="408" y1="52" x2="408" y2="78" stroke="#000000" stroke-width="1.2" />
+                  <!-- Top cap ellipse -->
+                  <ellipse cx="400" cy="45" rx="18" ry="6" fill="#ffffff" stroke="#000000" stroke-width="2" />
+                </g>
+              </g>
+
+              <!-- Callout Labels Group (Default OFF) -->
+              <g id="sph-labels-group" style="display: none;">
+                <!-- 1. Circular Disc Callout -->
+                <g class="diagram-callout" id="callout-sph-disc">
+                  <rect x="180" y="24" width="95" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="227" y="43" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Circular disc</text>
+                  <line x1="245" y1="52" x2="310" y2="85" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+
+                <!-- 2. Vertical Pitch Scale Callout -->
+                <g class="diagram-callout" id="callout-sph-ruler">
+                  <rect x="625" y="70" width="130" height="38" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="690" y="86" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Vertical pitch scale/</text>
+                  <text x="690" y="100" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Linear scale</text>
+                  <line x1="625" y1="89" x2="588" y2="89" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+
+                <!-- 3. Central Screw Callout -->
+                <g class="diagram-callout" id="callout-sph-screw">
+                  <rect x="175" y="195" width="100" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="225" y="214" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Central screw</text>
+                  <line x1="275" y1="209" x2="385" y2="218" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+
+                <!-- 4. Central Nut / Hub Callout -->
+                <g class="diagram-callout" id="callout-sph-nut">
+                  <rect x="625" y="165" width="115" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="682" y="184" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Central nut / Hub</text>
+                  <line x1="625" y1="179" x2="430" y2="175" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+
+                <!-- 5. Fixed Outer Legs Callout -->
+                <g class="diagram-callout" id="callout-sph-leg">
+                  <rect x="155" y="260" width="105" height="28" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="207" y="279" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Fixed outer legs</text>
+                  <line x1="207" y1="288" x2="250" y2="276" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+
+                <!-- 6. Knob / Head Callout -->
+                <g class="diagram-callout" id="callout-sph-head">
+                  <rect x="345" y="8" width="90" height="26" fill="#ffffff" stroke="#00875a" stroke-width="1.5" />
+                  <text x="390" y="25" fill="#005030" font-size="11" font-weight="700"
+                    font-family="'Outfit', sans-serif" text-anchor="middle">Knob / Head</text>
+                  <line x1="390" y1="34" x2="390" y2="44" stroke="#00875a" stroke-width="1.5"
+                    marker-end="url(#arrow-green-sph)" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Spherometer Controls & Readout Panel -->
+        <div class="pull-out-panel">
+          <h3 style="font-family: 'Cinzel', serif; color: var(--accent); margin-bottom: 0.8rem; font-size: 1.15rem;">
+            Controls & Metrology</h3>
+
+          <div class="form-group">
+            <label for="spherometer-surface">Measurement Surface</label>
+            <select id="spherometer-surface" style="padding: 0.55rem 0.5rem;">
+              <option value="flat" selected>Flat Glass Plate (h = 0)</option>
+              <option value="convex">Convex Lens / Spherical Mirror (h &gt; 0)</option>
+              <option value="concave">Concave Lens / Mirror (h &lt; 0)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="spherometer-h">Screw Height / Sagitta (h mm)</label>
+            <input type="range" id="spherometer-h" min="-10" max="10" step="0.01" value="0">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.3rem;">
+              <span id="sph-range-min-label" style="font-size: 0.75rem; color: var(--text-muted);">-10 mm</span>
+              <div style="display: flex; gap: 0.3rem; align-items: center;">
+                <button class="cal-btn-mini" id="sph-step-m1" title="-1.0 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-1.0</button>
+                <button class="cal-btn-mini" id="sph-step-m01" title="-0.1 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-0.1</button>
+                <button class="cal-btn-mini" id="sph-step-m001" title="-0.01 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">-0.01</button>
+                <button class="cal-btn-mini" id="sph-step-p001" title="+0.01 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+0.01</button>
+                <button class="cal-btn-mini" id="sph-step-p01" title="+0.1 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+0.1</button>
+                <button class="cal-btn-mini" id="sph-step-p1" title="+1.0 mm"
+                  style="padding: 2px 6px; font-size: 0.75rem; background: #0e2942; border: 1px solid var(--panel-border); color: var(--accent); border-radius: 3px; cursor: pointer;">+1.0</button>
+              </div>
+              <span id="sph-range-max-label" style="font-size: 0.75rem; color: var(--text-muted);">+10 mm</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div class="form-group">
+              <label for="spherometer-msr-input">Main Scale (MSR mm)</label>
+              <input type="number" id="spherometer-msr-input" min="-10" max="10" step="1" value="0">
+            </div>
+            <div class="form-group">
+              <label for="spherometer-csr-input">Circular Scale (CSR Div)</label>
+              <input type="number" id="spherometer-csr-input" min="0" max="99" step="1" value="0">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+            <div class="form-group">
+              <label for="spherometer-a">Leg Distance (l) (mm)</label>
+              <input type="number" id="spherometer-a" min="10" max="100" step="1" value="50">
+            </div>
+            <div class="form-group">
+              <label for="spherometer-error">Zero Error (mm)</label>
+              <input type="number" id="spherometer-error" min="-1" max="1" step="0.01" value="0">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.8rem; margin: 0.8rem 0;">
+            <button id="sph-calc-btn" class="action-btn active"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; display: flex; align-items: center; gap: 0.4rem;">
+              <span>Calculate</span>
+            </button>
+            <button id="sph-reset-btn" class="action-btn"
+              style="flex: 1; padding: 0.6rem; text-align: center; justify-content: center; background: #0e2942; color: var(--text-muted); border-color: var(--panel-border);">
+              <span>Reset</span>
+            </button>
+          </div>
+
+          <div class="readout" id="sph-readout-box">
+            <div class="readout-header"
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+              <span
+                style="font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--accent); font-weight: 600; letter-spacing: 0.5px;">Live
+                Readout</span>
+            </div>
+            <div class="readout-row">
+              <span>Least Count:</span>
+              <span id="sph-lc-display" style="color: var(--accent); font-weight: 600;">0.01 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Main Scale (MSR):</span>
+              <span id="sph-msr-display">0.0 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Circular Scale (CSR):</span>
+              <span id="sph-csr-display">0.00 mm (Div: 0)</span>
+            </div>
+            <div class="readout-row">
+              <span>Observed Height (h):</span>
+              <span id="sph-observed-display">0.00 mm</span>
+            </div>
+            <div class="readout-row">
+              <span>Zero Error:</span>
+              <span id="sph-error-display">0.00 mm</span>
+            </div>
+            <div class="readout-divider" style="margin: 0.6rem 0; border-top: 1px dashed var(--panel-border);"></div>
+            <div class="readout-row corrected-row"
+              style="align-items: center; justify-content: space-between; padding-top: 0.2rem;">
+              <span style="font-weight: 700; color: var(--accent); font-size: 0.95rem;">Corrected Height (h):</span>
+              <div class="flap-container-wrapper" style="display: flex; align-items: center; gap: 0.3rem;">
+                <div id="spherometer-h-flap" class="split-flap-board"></div>
+                <span id="spherometer-h-val" style="display: none;">0.00 mm</span>
+              </div>
+            </div>
+            <div class="readout-row" style="margin-top: 0.4rem;">
+              <span style="font-weight: 700; color: var(--teal);">Radius of Curvature (R):</span>
+              <span id="spherometer-r" style="font-weight: 700; color: var(--teal); font-size: 1.05rem;">∞ (Flat
+                Surface)</span>
+            </div>
+          </div>
+
+          <!-- Step-by-Step Intermediate Calculations -->
+          <div id="sph-steps-box"
+            style="margin-top: 1rem; background: rgba(7, 21, 36, 0.6); border: 1px solid var(--panel-border); border-radius: 6px; padding: 0.8rem;">
+            <div
+              style="font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px;">
+              Calculation Breakdown</div>
+            <div id="sph-steps-content"
+              style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; font-family: monospace;">
+              <div>1. LC = Pitch / Circular Divisions = 1.00 mm / 100 = 0.0100 mm</div>
+              <div>2. CSR = 0 × 0.0100 mm = 0.000 mm</div>
+              <div>3. Observed (h) = 0.00 mm + 0.000 mm = 0.000 mm</div>
+              <div>4. Corrected (h) = 0.000 mm - (0.000 mm) = 0.000 mm</div>
+              <div>5. R = ∞ (Flat Surface, h = 0)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational & Mathematical Panels -->
+      <div class="iks-grid" style="margin-top: 2rem;">
+        <div class="iks-item math-panel">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            Spherometer Mathematical Formulation</h3>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">1. Least
+              Count (LC):</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$\text{LC} = \frac{\text{Pitch}}{\text{Total Circular Scale Divisions}} = \frac{1\text{ mm}}{100} =
+              0.01\text{ mm}$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">2.
+              Corrected Sagitta Height (h):</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$h = \Big[\text{MSR} + (\text{CSR} \times \text{LC})\Big] - (\pm\text{Zero Error})$$
+            </div>
+          </div>
+
+          <div class="math-block" style="margin-bottom: 1.2rem;">
+            <div class="math-heading" style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">3.
+              Radius of Curvature (R):</div>
+            <div class="math-eq katex-eq"
+              style="background: rgba(7, 21, 36, 0.7); padding: 0.8rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); font-size: 1.05rem; overflow-x: auto;">
+              $$R = \frac{l^2}{6h} + \frac{h}{2}$$
+            </div>
+          </div>
+
+          <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            where $l$ is the mean distance between any two of the three outer pointed legs forming the equilateral base
+            triangle, and $h$ is the sagitta (height of the spherical crown above or below the plane of the outer feet).
+          </p>
+        </div>
+
+        <div class="iks-item">
+          <h3
+            style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 1.2rem; border-bottom: 1px solid var(--panel-border); padding-bottom: 0.5rem;">
+            What is a Spherometer?</h3>
+          <p>
+            A <strong>Spherometer</strong> is a specialized high-precision metrological instrument invented by French
+            optician <strong>Nicolas Fortin</strong> in 1810. It is engineered to measure the <strong>radius of
+              curvature</strong> of spherical surfaces such as optical lenses, curved mirrors, and watch glasses, as
+            well as the thickness of microscopic glass plates.
+          </p>
+          <p style="margin-top: 0.8rem;">
+            <strong>Principle of Operation:</strong> It rests on three fixed triangular legs of equal length forming an
+            equilateral base. A fourth central micrometer screw moves vertically through the central nut:
+          </p>
+          <div class="math-eq katex-eq"
+            style="background: rgba(7, 21, 36, 0.7); padding: 0.7rem 1rem; border-radius: 6px; border: 1px solid var(--panel-border); margin: 0.8rem 0; font-size: 1rem; overflow-x: auto;">
+            $$\text{Sagitta } h = \text{Elevation of Central Leg relative to Outer Plane}$$
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+            On a perfectly flat glass plane, all four points touch simultaneously ($h = 0$, giving $R = \infty$). When
+            placed on a convex or concave lens, rotating the disc until the central screw tip just touches the surface
+            yields $h$ to within $\pm 0.01\text{ mm}$.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Full-viewport Instrument Intro Overlays (top-level fixed overlays) -->
+  <div class="simulator-intro-overlay hidden" id="vernier-intro-overlay">
+    <div class="intro-text-container">
+      <span class="intro-badge">Physical Metrology Suite</span>
+      <div id="vernier-stroke-container" class="intro-stroke-container"></div>
+    </div>
+  </div>
+
+  <div class="simulator-intro-overlay hidden" id="screw-intro-overlay">
+    <div class="intro-text-container">
+      <span class="intro-badge">Physical Metrology Suite</span>
+      <div id="screw-stroke-container" class="intro-stroke-container"></div>
+    </div>
+  </div>
+
+  <div class="simulator-intro-overlay hidden" id="spherometer-intro-overlay">
+    <div class="intro-text-container">
+      <span class="intro-badge">Physical Metrology Suite</span>
+      <div id="spherometer-stroke-container" class="intro-stroke-container"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="yasti.js"></script>
+</body>
+
+</html>
