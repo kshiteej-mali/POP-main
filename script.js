@@ -1,4 +1,5 @@
 
+// Copyright 2026 Kshiteej Mali. Licensed under the Apache License, Version 2.0.
 class SplitFlapText {
   constructor(container, options = {}) {
     this.container = container;

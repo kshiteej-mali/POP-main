@@ -1,3 +1,4 @@
+// Copyright 2026 Kshiteej Mali. Licensed under the Apache License, Version 2.0.
 // Yasti Yantra 3D logic and Calculator
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('yasti-3d-container');
